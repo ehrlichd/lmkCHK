@@ -1,0 +1,13 @@
+Package: lmkCHK
+Title: A package for visualizing and screening 3D landmark data
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Daniel",
+           family = "Ehrlich",
+           role = c("aut", "cre"),
+           email = "dan.ehrlich.e@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
