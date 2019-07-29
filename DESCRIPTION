@@ -5,9 +5,11 @@ Authors@R:
     person(given = "Daniel",
            family = "Ehrlich",
            role = c("aut", "cre"),
-           email = "dan.ehrlich.e@gmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "dan.ehrlich.e@gmail.com")
 Description: What the package does (one paragraph).
-License: What license it uses
+Depends: R (>= 3.2.0), rgl
+Imports: geomorph, Morpho, psych, lme4, grDevices
+License: GPL (>= 3.0)
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.1.1

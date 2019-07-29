@@ -1,7 +1,5 @@
 # lmkCHK
-R package to assist in working with 3D landmark data
-This is a line from Rstudio
+Helper functions for visualizing and screening 2D/3D landmark data.
 
-This is yet another line from RStudio
+WIP.
 
-a final test
