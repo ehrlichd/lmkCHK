@@ -124,14 +124,17 @@ get_sliders <- function(c1){
 #'  
 #' @return Returns a list (3L) containing the direct Euclidean distance for all individuals/landmarks, as well as sumarized by individual and landmark
 #' 
+#' @export
 #' 
 euD <- function(A1, A2){
-  if (dim(A1)!=dim(A2)){stop("Arrays must have the same extent")}
+  if ( length(dim(A1))==3 & length(dim(A2))==3){
+    if (dim(A1) != dim(A2)){stop("Arrays must have the same extent")}
+  
   
   l <- dim(A1)[[1]]
   n <- dim(A1)[[3]]
   
-  o1 <- matrix(data = NA,l,n, dimnames = list(dimnames(A1)[[1]], dimnames(A1)[[2]]))
+  o1 <- matrix(data = NA,nrow = l, ncol = n, dimnames = list(dimnames(A1)[[1]], dimnames(A1)[[2]]))
   
   
   for (c in 1:n){
@@ -151,6 +154,7 @@ euD <- function(A1, A2){
   
   out <- list("all.dif"= all.dif, "by.lmk" = lmk.dif, "by.ind" = ind.dif)
   return(out)
+  } ###figure out how to generalize input and internal calcs
 }
 
 

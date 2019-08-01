@@ -3,6 +3,7 @@
 export(CV.2D.shape)
 export(bscale)
 export(col.ramp)
+export(euD)
 export(form.PCA.plot)
 export(get_sliders)
 export(iccA)
