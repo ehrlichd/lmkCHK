@@ -6,7 +6,9 @@ Authors@R:
            family = "Ehrlich",
            role = c("aut", "cre"),
            email = "dan.ehrlich.e@gmail.com")
-Description: What the package does (one paragraph).
+Description: A package for visualizing and screening 3D landmark data. 
+  Meant to supplement features of geomorph, Morpho, and other geometric morphometric
+  packages. 
 Depends: R (>= 3.2.0), rgl
 Imports: geomorph, Morpho, psych, lme4, grDevices
 License: GPL (>= 3.0)

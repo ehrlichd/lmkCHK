@@ -1,5 +1,5 @@
 #'@name lmkCHK
-#'@aliases lmkCHK-package
+#'@aliases lmkCHK-package, LMKhelpR
 #'
 #'@title Landmark Check
 #'@author Daniel E. Ehrlich
@@ -19,6 +19,7 @@
 #'
 NULL
 
+#####Need to find sample LMK data to include; MWU skulls?#####
 
 #'Write DTA/NTS
 #'

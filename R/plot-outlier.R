@@ -2,59 +2,89 @@
 #'
 #'Function to identify outliers visually
 #'
-library(geomorph)
-dat = readland.nts("cran.dta")
+#'
+#'@param a Raw 3D coordinate data, procrustes aligned coordinate data, or an object of class == gpagen
+#'@param gpa Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done.
+#'@param ... Additional parameters to pass to gpagen
+#'
+#' @export
+#' 
+#'@import rgl
+#'@import geomorph 
+#'
 
-dim(dat)
-a.dat = gpagen(dat, ProcD = F)
-
-p = dim(dat)[[1]]
-n = dim(dat)[[3]]
-
-a.dat$consensus
-r = range(a.dat$coords)
-plot3d(NULL, xlim = r, ylim = r, zlim = r, xlab = "", axes = F)
-points3d(a.dat$consensus, col = "red")
-
-for (i in 1:n){
-  points3d(a.dat$coords[,,i], col = "grey")
-}
-spheres3d(a.dat$consensus, col = "red",radius = 1)
-dim(a.dat$coords)
-
-dist = matrix(NA, nrow = 610, ncol = 2)
-dist[,1] = dimnames(dat)[[3]]
-rm(i,j)
-tab = NULL
-for(i in 1:n){
-  for(j in 1:p){
-    tab[j] = sqrt(sum(((a.dat$consensus[j,1] - a.dat$coords[j,1,i])^2), ((a.dat$consensus[j,1] - a.dat$coords[j,1,i])^2), ((a.dat$consensus[j,1] - a.dat$coords[j,1,i])^2)))
-    if (j == p){dist[i,2] = sum(tab)}
+LMK_plotoutliers <- function(a, gpa = TRUE, ...){
+  
+  p <- dim(a)[[1]]  #p landmarks
+  k <- dim(a)[[2]]  #k dimensions
+  n <- dim(a)[[3]]  #n observations
+  
+  if (is.null(dimnames(a)[[3]])){
+    lbl <- paste("Ind",1:n, sep = ".")
+  } else { lbl <- dimnames(a)[[3]] }#Get IDs 
+  
+  
+  if (class(a)=="gpagen"){a <- a$coords}
+  if (gpa == TRUE) { a <- gpagen(a, ...)$coords}
+  
+  ##Create tables and variables for later
+  dist <- matrix(NA, nrow = n, ncol = 2, dimnames = list(NULL, c("ind", "proc.D")))
+  dist[,1] <- lbl
+  
+  
+  tab <- NULL
+  
+  ##Grand mean
+  grandM <- mshape(a)
+  
+  ##Range of data
+  r <- range(a)
+  
+  
+  ####Plot procrustes aligned GrandMean shape and all observations
+  ####Set a toggle for this#####
+  
+  plot3d(NULL, xlim = r, ylim = r, zlim = r, xlab = "", axes = F)
+  points3d(grandM, col = "red")
+  
+  for (i in 1:n){
+    points3d(a[,,i], col = "grey")
   }
   
   
-}
-View(dist[order(dist[,2], decreasing = T),])
-y = range(dist[,2])
-x = c(1,n)
-rm(i,j)
-plot(1:610, dist[order(dist[,2], decreasing = T),2], type = "n")
-for (i in 1:610){
-  d = as.numeric(dist[order(dist[,2], decreasing = T),2][i])
-  if (d > mean(as.numeric(dist[,2])) + 3*sd(as.numeric(dist[,2]))){
-    points(i, d, pch = 16, col = "red")
-    text(i*10,d,labels = dist[i,1], col = "red", adj = c(0,0))
+  ####Calculate average procrustes distance ("error") from GrandMean
+  
+  for(i in 1:n){
+    for(j in 1:p){
+      tab[j] = sqrt(sum(((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2)))
+      if (j == p){dist[i,2] = sum(tab)}
+    }
+    
+  }
+  
+  ##Re-order table
+  dist <- dist[order(dist[,2], decreasing = T),]
+
+  y <- range(dist[,2])
+  x <- c(1,n)
+  
+  ####Plot 
+  plot(1:n, dist[,2], type = "n")
+  
+  for (i in 1:n){
+    
+  if (dist[i,2] > mean(as.numeric(dist[,2])) + 3*sd(as.numeric(dist[,2]))){
+    points(i, dist[i,2], pch = 16, col = "red")
+    text(i*10, dist[i,2],labels = dist[i,1], col = "red", adj = c(0,0))
+    
     } else {
-      
-      points(i, d, pch = 16, col = "grey")
-      }
+      points(i, dist[i,2], pch = 16, col = "grey")
+    }
+    
   }
-
- abline(h=mean(as.numeric(dist[,2])) + 3*sd(as.numeric(dist[,2])), col = "red")
-
-View(dist[,2])
-dist
-t.dat = dist[order(dist[,2],decreasing = T),]
-View(t.dat)
-View(dist[sort])
-length(a.dat$consensus[1,]) == length(a.dat$coords[1,,1])
+  sum <- matrix(c("p", "k", "n", "mean.ProcD", "sd.ProcD", "range.ProcD", p, k , n, mean(as.numeric(dist[,2]), na.rm = T), sd(as.numeric(dist[,2]), na.rm = T)), range(as.numeric(dist[,2]),na.rm = T))
+  
+  out <- list(sum, dist)
+  names(out) <- c("summary.info")
+  return(out)
+}

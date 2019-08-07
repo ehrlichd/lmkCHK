@@ -2,7 +2,8 @@
 % Please edit documentation in R/package-support.R
 \name{lmkCHK}
 \alias{lmkCHK}
-\alias{lmkCHK-package}
+\alias{lmkCHK-package,}
+\alias{LMKhelpR}
 \title{Landmark Check}
 \description{
 Helper functions for visualizing and screening 2D/3D landmark data.
