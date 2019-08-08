@@ -5,15 +5,15 @@
 #'
 #'@param a Raw 3D coordinate data, procrustes aligned coordinate data, or an object of class == gpagen
 #'@param gpa Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done.
+#'@param plotALL Logical, plot all specimens (and mean) in 3D space
+#'
 #'@param ... Additional parameters to pass to gpagen
 #'
-#' @export
+#'@export
 #' 
-#'@import rgl
-#'@import geomorph 
-#'
+#'@return Returns a list of specimens and their squared procrustes distance to the mean shape
 
-LMK_plotoutliers <- function(a, gpa = TRUE, ...){
+LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
   
   p <- dim(a)[[1]]  #p landmarks
   k <- dim(a)[[2]]  #k dimensions
@@ -42,14 +42,15 @@ LMK_plotoutliers <- function(a, gpa = TRUE, ...){
   
   
   ####Plot procrustes aligned GrandMean shape and all observations
-  ####Set a toggle for this#####
   
-  plot3d(NULL, xlim = r, ylim = r, zlim = r, xlab = "", axes = F)
-  points3d(grandM, col = "red")
+  if (plotALL == TRUE){
+    plot3d(grandM, xlim = r, ylim = r, zlim = r, xlab = "", axes = F, type = "s", col = "red", size = 1)
+    
+    for (i in 1:n){
+      points3d(a[,,i], col = hsv(0,0,.8, alpha = .8))
+      }
   
-  for (i in 1:n){
-    points3d(a[,,i], col = "grey")
-  }
+    }
   
   
   ####Calculate average procrustes distance ("error") from GrandMean
@@ -82,7 +83,12 @@ LMK_plotoutliers <- function(a, gpa = TRUE, ...){
     }
     
   }
-  sum <- matrix(c("p", "k", "n", "mean.ProcD", "sd.ProcD", "range.ProcD", p, k , n, mean(as.numeric(dist[,2]), na.rm = T), sd(as.numeric(dist[,2]), na.rm = T)), range(as.numeric(dist[,2]),na.rm = T))
+  sum <- matrix(
+    c("p", "k", "n", "mean.ProcD", "sd.ProcD", "min.ProcD", "max.ProcD", 
+      p, k , n, 
+      mean(as.numeric(dist[,2]), na.rm = T), 
+      sd(as.numeric(dist[,2]), na.rm = T), 
+      range(as.numeric(dist[,2]), na.rm = T)), nrow = 7, ncol = 2)
   
   out <- list(sum, dist)
   names(out) <- c("summary.info")

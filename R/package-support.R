@@ -1,5 +1,5 @@
 #'@name lmkCHK
-#'@aliases lmkCHK-package, LMKhelpR
+#'
 #'
 #'@title Landmark Check
 #'@author Daniel E. Ehrlich
@@ -35,7 +35,7 @@ NULL
 #'
 #'
 #'
-writeland_nts <- function(A, filepath){
+LMK_writeland_nts <- function(A, filepath){
   p <- dim(x)[1]
   k <- dim(x)[2]
   n <- dim(x)[3]
@@ -68,18 +68,28 @@ writeland_nts <- function(A, filepath){
 #' 
 #' Function to swap landmark configurations, or set as missing
 #' 
+#' @param a a p x k x n matrix of landmark coordinates
 #' @param l1 a numeric vector of landmark index (sequence number) to be changed
 #' @param l2 a numeric vector of landmark index (Sequence number) to change to
 #' 
 #' @author Daniel Ehrlich
 #' 
-lmk.swap <- function(l1, l2){
+LMK_swap <- function(a, l1, l2){
   #function to swap landmark configurations either by list or single landmarks
   #change the order, or set LMKs to NA
   #code written by DEE
   #WIP
+  t.a <- a
+  if (length(l1) != length(l2)){stop("Vectors must be the same length")}
   
+  for (i in 1:length(l1)){
+    
+    t.a[l1[i],,] <- a[l2[i],,]
+    t.a[l2[i],,] <- a[l1[i],,]
+    
   }
+  }
+
 #####
 #' Get sliders
 #' 
@@ -87,15 +97,15 @@ lmk.swap <- function(l1, l2){
 #' 
 #' Assumes all points slide sequentially between endpoints
 #'  
-#' @param c1 A vector of landmark numbers
+#'@param c1 A vector of landmark numbers
 #' 
-#' @return Returns a table of sliders suitable for use with geomorph::gpagen(). This function assumes all points slide sequentially between the max/min landmarks in the sequence.
+#'@return Returns a table of sliders suitable for use with geomorph::gpagen(). This function assumes all points slide sequentially between the max/min landmarks in the sequence.
 #' 
 #' @export
 #' 
 #' @author Daniel Ehrlich
 #'    
-get_sliders <- function(c1){
+LMK_get_sliders <- function(c1){
   
   t <- as.numeric(as.matrix(c1)) # convert list to vector
   l <- length(t)
@@ -127,7 +137,7 @@ get_sliders <- function(c1){
 #' 
 #' @export
 #' 
-euD <- function(A1, A2){
+LMK_euD <- function(A1, A2){
   if ( length(dim(A1))==3 & length(dim(A2))==3){
     if (dim(A1) != dim(A2)){stop("Arrays must have the same extent")}
   
@@ -176,7 +186,7 @@ euD <- function(A1, A2){
 #'
 
 
-col.ramp <- function(grp, mute = TRUE){
+LMK_colramp <- function(grp, mute = TRUE){
   
   f.grp <- as.factor(grp)
   #ensure vector is a factor to match index
@@ -214,7 +224,7 @@ col.ramp <- function(grp, mute = TRUE){
 #'
 #'@export
 
-bscale <- function(A, cs){
+LMK_bscale <- function(A, cs){
   
   al <- dim(A)[[3]]
   cl <- length(cs)
@@ -237,7 +247,7 @@ bscale <- function(A, cs){
 #'@param d a dataset
 #'@param f a function
 #'@param grp a grouping varaible
-grp.apply <- function(d, f, grp){
+LMK_grp_apply <- function(d, f, grp){
   
   out <- as.data.frame(matrix(nrow = (length(levels(grp))+1), ncol = length(d)*2))
   c.names <- c(colnames(d), paste(colnames(d),"n=", sep = "."))
@@ -280,7 +290,7 @@ grp.apply <- function(d, f, grp){
 #' @export
 #' 
 #' 
-iccA <- function(obs1, obs2){
+LMK_iccA <- function(obs1, obs2){
   #inter- or intra- oberserer error
   #where obs1 and obs2 are two identical landmark data sets
   #function to perform inter class correlation and reports F- and p- values, chronbach's alpha, as well as euclidean distance for a set of landmarks
@@ -324,7 +334,7 @@ iccA <- function(obs1, obs2){
 
 #####
 
-#'Formspace PCA
+#'Shapespace PCA
 #'
 #'Plot 2D or 3D scatter plot of tangent shape-space for a GPA object (of gpagen())
 #'
@@ -337,22 +347,22 @@ iccA <- function(obs1, obs2){
 #'@export
 #'
 #'
-form.PCA.plot = function(A, xPC = 1, yPC = 2, zPC = NULL, grp){
-  f.PCA = geomorph::plotTangentSpace(A, warpgrids = F)
-  grp = as.factor(grp)
-  l = length(levels(grp))
+LMK_PCA_plot <- function(A, xPC = 1, yPC = 2, zPC = NULL, grp){
+  f.PCA <- geomorph::plotTangentSpace(A, warpgrids = F)
+  grp <- as.factor(grp)
+  l <- length(levels(grp))
   
   ##Calculate means
-  Mean.tab = matrix(nrow = l+1, ncol = 10)
+  Mean.tab <- matrix(nrow = l+1, ncol = 10)
   for (i in 1:l){
-    Mean.tab[i,] = colMeans(f.PCA$pc.scores[as.integer(grp) == i, 1:10 ])
+    Mean.tab[i,] <- colMeans(f.PCA$pc.scores[as.integer(grp) == i, 1:10 ])
   }
-  Mean.tab[l+1,] = colMeans(f.PCA$pc.scores[,1:10]) 
-  rownames(Mean.tab) = c(levels(grp),"GrandM")
-  colnames(Mean.tab) = paste("PC",1:10, sep=".")
+  Mean.tab[l+1,] <- colMeans(f.PCA$pc.scores[,1:10]) 
+  rownames(Mean.tab) <- c(levels(grp),"GrandM")
+  colnames(Mean.tab) <- paste("PC",1:10, sep=".")
   
   if (is.null(zPC)){
-    plot(f.PCA$pc.scores[,c(xPC, yPC)], col = col.ramp(grp), pch = 16)
+    plot(f.PCA$pc.scores[,c(xPC, yPC)], col = LMK_colramp(grp), pch = 16)
     points(Mean.tab[,c(xPC, yPC)], pch = 21, bg = c(rainbow(l, s = .4), "grey"), cex = 1.5)
     legend("topleft", legend = c(levels(grp), "G.mean"), pch = 16, col = c(rainbow(l, s=.4), "grey"))
   } #implement 3D plot

@@ -9,8 +9,8 @@ Authors@R:
 Description: A package for visualizing and screening 3D landmark data. 
   Meant to supplement features of geomorph, Morpho, and other geometric morphometric
   packages. 
-Depends: R (>= 3.2.0), rgl
-Imports: geomorph, Morpho, psych, lme4, grDevices
+Depends: R (>= 3.2.0), rgl, geomorph
+Imports: Morpho, psych, lme4, grDevices
 License: GPL (>= 3.0)
 Encoding: UTF-8
 LazyData: true

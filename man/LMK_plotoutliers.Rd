@@ -4,14 +4,19 @@
 \alias{LMK_plotoutliers}
 \title{Plot Outliers}
 \usage{
-LMK_plotoutliers(a, gpa = TRUE, ...)
+LMK_plotoutliers(a, gpa = TRUE, plotALL = TRUE, ...)
 }
 \arguments{
 \item{a}{Raw 3D coordinate data, procrustes aligned coordinate data, or an object of class == gpagen}
 
 \item{gpa}{Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done.}
 
+\item{plotALL}{Logical, plot all specimens (and mean) in 3D space}
+
 \item{...}{Additional parameters to pass to gpagen}
+}
+\value{
+Returns a list of specimens and their squared procrustes distance to the mean shape
 }
 \description{
 Function to identify outliers visually

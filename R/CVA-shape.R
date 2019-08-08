@@ -11,11 +11,11 @@
 #' @return Plots the mean landmark configuration of a CVA an vectors representing the shape change along a given variate, by a given scale
 #' 
 #' 
-CV.2D.shape <- function(CVA, variate = 1, scale = 5){
+LMK_CVA_2D <- function(CVA, variate = 1, scale = 5){
   #Function to visualize CVA shape changes of landmarks 
   #where CVA is an object of class 'CVA' from Morpho
   
-  ref <- Morpho::CVA$Grandm
+  ref <- CVA$Grandm
   target <- scale*matrix(CVA$CVvis[,variate], nrow(CVA$Grandm), ncol(CVA$Grandm)) + CVA$Grandm
   
   plot(ref, asp=1, xlab = "", ylab = "", axes = F)
@@ -45,8 +45,8 @@ CV.2D.shape <- function(CVA, variate = 1, scale = 5){
 ####Also, open3d means multi plots are impossible
 ###Need to combine 2D and 3D into a single function, possibly with PCA visualization as well
 
-CV.3D.shape <- function(CVA, variate = 1, scale = 5, links = NULL){
-  ref <- Morpho::CVA$Grandm
+LMK_CVA_3D <- function(CVA, variate = 1, scale = 5, links = NULL){
+  ref <- CVA$Grandm
   target <- scale*matrix(CVA$CVvis[,variate], nrow(CVA$Grandm), ncol(CVA$Grandm)) + CVA$Grandm
   r <- range(ref[,1])*1.1
   

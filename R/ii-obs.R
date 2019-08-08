@@ -16,7 +16,7 @@
 #' @author Daniel Ehrlich
 #' 
 #' 
-obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
+LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
  
   #1 euclidian difference between individual landmarks and summarized by individua and landmark
   
@@ -47,7 +47,7 @@ obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   #requires shapes package
   
   aln <- geomorph::gpagen(araw,ProcD = F)
-  aln <- bscale(aln$coords, aln$Csize)
+  aln <- LMK_bscale(aln$coords, aln$Csize)
   
   dimnames(aln) <- lbl
   
@@ -56,14 +56,14 @@ obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   ar2 <- aln[,,(1:n)+n]
   
   
-  d.out <- euD(ar1, ar2)
+  d.out <- LMK_euD(ar1, ar2)
   
   
   ###3: Intraclass Correlation
   
   
   
-  icc.out <- iccA(ar1, ar2)
+  icc.out <- LMK_iccA(ar1, ar2)
   
   
   ###5. Formatting
