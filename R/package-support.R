@@ -332,40 +332,4 @@ LMK_iccA <- function(obs1, obs2){
 }
 
 
-#####
-
-#'Shapespace PCA
-#'
-#'Plot 2D or 3D scatter plot of tangent shape-space for a GPA object (of gpagen())
-#'
-#'@param A A 3d landmark array
-#'@param xPC an integer indicating which PC to plot, default = 1
-#'@param yPC an integer indicating which PC to plot, default = 2
-#'@param zPC an integer indiciating which PC to plot, default = NULL (2D)
-#'@param grp a grouping factor
-#'
-#'@export
-#'
-#'
-LMK_PCA_plot <- function(A, xPC = 1, yPC = 2, zPC = NULL, grp){
-  f.PCA <- geomorph::plotTangentSpace(A, warpgrids = F)
-  grp <- as.factor(grp)
-  l <- length(levels(grp))
-  
-  ##Calculate means
-  Mean.tab <- matrix(nrow = l+1, ncol = 10)
-  for (i in 1:l){
-    Mean.tab[i,] <- colMeans(f.PCA$pc.scores[as.integer(grp) == i, 1:10 ])
-  }
-  Mean.tab[l+1,] <- colMeans(f.PCA$pc.scores[,1:10]) 
-  rownames(Mean.tab) <- c(levels(grp),"GrandM")
-  colnames(Mean.tab) <- paste("PC",1:10, sep=".")
-  
-  if (is.null(zPC)){
-    plot(f.PCA$pc.scores[,c(xPC, yPC)], col = LMK_colramp(grp), pch = 16)
-    points(Mean.tab[,c(xPC, yPC)], pch = 21, bg = c(rainbow(l, s = .4), "grey"), cex = 1.5)
-    legend("topleft", legend = c(levels(grp), "G.mean"), pch = 16, col = c(rainbow(l, s=.4), "grey"))
-  } #implement 3D plot
-  
-}
 

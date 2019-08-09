@@ -28,7 +28,8 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
   if (gpa == TRUE) { a <- gpagen(a, ...)$coords}
   
   ##Create tables and variables for later
-  dist <- matrix(NA, nrow = n, ncol = 2, dimnames = list(NULL, c("ind", "proc.D")))
+  dist <- matrix(NA, nrow = n, ncol = 3)
+  colnames(dist) <- c("ind", "proc.D", "index")
   dist[,1] <- lbl
   
   
@@ -57,8 +58,10 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
   
   for(i in 1:n){
     for(j in 1:p){
-      tab[j] = sqrt(sum(((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2)))
-      if (j == p){dist[i,2] = sum(tab)}
+      tab[j] <- sqrt(sum(((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2)))
+      if (j == p){
+        dist[i,2] <- sum(tab)
+        dist[i,3] <- i}
     }
     
   }
@@ -76,7 +79,7 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
     
   if (dist[i,2] > mean(as.numeric(dist[,2])) + 3*sd(as.numeric(dist[,2]))){
     points(i, dist[i,2], pch = 16, col = "red")
-    text(i*10, dist[i,2],labels = dist[i,1], col = "red", adj = c(0,0))
+    #text(i, dist[i,2],labels = dist[i,1], col = "red", adj = c(1,1)) ##No idea why this doesn't work
     
     } else {
       points(i, dist[i,2], pch = 16, col = "grey")
@@ -90,7 +93,7 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
       sd(as.numeric(dist[,2]), na.rm = T), 
       range(as.numeric(dist[,2]), na.rm = T)), nrow = 7, ncol = 2)
   
-  out <- list(sum, dist)
-  names(out) <- c("summary.info")
+  out <- list("summary.info" = sum, "ind.info" = dist)
+  
   return(out)
 }
