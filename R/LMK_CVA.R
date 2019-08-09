@@ -65,6 +65,15 @@ LMK_CVA_3D <- function(CVA, variate = 1, scale = 5, links = NULL){
 
 ###Combine shapepca with CVA as LMK_vis
 
+###Implement 3D class
+
+###Implement eigen graph as well
+##Figure out a function to graph and identify REASONABLE number of eigen values
+#IE broken stick, how to calc?
+##Output table of eigenvalues and add to plott as well
+
+##add scaling parameter/additional parameters IE should the axes be scaled by eigenloadings (probably)
+
 #'Shapespace PCA
 #'
 #'Plot 2D or 3D scatter plot of tangent shape-space for a GPA object (of gpagen())
@@ -97,5 +106,7 @@ LMK_PCA_plot <- function(A, xPC = 1, yPC = 2, zPC = NULL, grp){
     points(Mean.tab[,c(xPC, yPC)], pch = 21, bg = c(rainbow(l, s = .4), "grey"), cex = 1.5)
     legend("topleft", legend = c(levels(grp), "G.mean"), pch = 16, col = c(rainbow(l, s=.4), "grey"))
   } #implement 3D plot
+  
+  
   
 }

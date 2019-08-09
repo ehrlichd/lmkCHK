@@ -58,7 +58,7 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
   
   for(i in 1:n){
     for(j in 1:p){
-      tab[j] <- sqrt(sum(((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2)))
+      tab[j] <- sqrt(sum(((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2), ((grandM[j,1] - a[j,1,i])^2))) ##Should use LMK_euD
       if (j == p){
         dist[i,2] <- sum(tab)
         dist[i,3] <- i}
@@ -97,3 +97,6 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
   
   return(out)
 }
+
+
+###Outliers identified from this plot in the SOF data set do not seem to be outliers?

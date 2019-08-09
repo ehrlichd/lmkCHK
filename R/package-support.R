@@ -21,6 +21,14 @@ NULL
 
 #####Need to find sample LMK data to include; MWU skulls?#####
 
+
+
+#'Confidence Ellipses
+#'
+#'Draw confidence ellipses around data
+#'
+#'IMPLEMENT
+
 #'Write DTA/NTS
 #'
 #'Write 3D array as a .dta/.nts file

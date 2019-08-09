@@ -1,3 +1,52 @@
+
+
+#' Compare Two landmark arrays
+#' 
+#' Plot 2 landmark configurations in 3D space.
+#' 
+#' Presumably, this will be procrustes aligned coordinates, but any 2 p x k x n arrays will work
+#' 
+#' @param A1 A 3D array of landmark data; A reference 
+#' @param A2 A second 3D array of landmark data to compare to the reference
+#' 
+#' 
+#' 
+#' @export
+#' 
+LMK_compare_two <- function(A1, A2){
+  #if (all(dim(A1)) != dim(A2)){stop("Landmark configurations must be the same")} ##No idea why this won't run "In addition: Warning message: In if (all(dim(A1)) != dim(A2)) { : the condition has length > 1 and only the first element will be used"
+  
+  open3d()
+  
+  r <- range(range(A1),range(A2))
+  p <- dim(A1)[[1]]
+  k <- dim(A1)[[2]]
+  if (length(dim(A1))==3){
+    n <- dim(A1)[[3]]
+    
+    for (i in 1:n){
+      plot3d(A1, col = "red", axes = F, xlim = r, ylim = r, zlim = r, size = 4, xlab = "X", ylab = "Y", zlab = "Z")
+      points3d(A2[,,i], col = "grey", size = 5)
+      text3d(colMeans(A1), pos = 3, texts = paste(names(A2), "compared to"))
+      text3d(colMeans(A1), pos = 1, texts = names(A1), col = "red")
+      for (j in 1:p){
+        lines3d(rbind(A1[j,], A2[j,,i]))
+      } 
+    }
+    }
+  else {
+    plot3d(A1, col = "red", axes = F, xlim = r, ylim = r, zlim = r, size = 4, xlab = "X", ylab = "Y", zlab = "Z")
+    points3d(A2, col = "grey", size = 5)
+    text3d(colMeans(A1), pos = 3, texts = paste(names(A2), "compared to"))
+    text3d(colMeans(A1), pos = 1, texts = names(A1), col = "red")
+    for (j in 1:p){lines3d(rbind(A1[j,], A2[j,]))
+    }
+    }
+    
+  }
+
+
+
 #'Screen Data
 #'
 #'Interactive function to compare individuals in an array to grandmean (or other refrence) to spot misplaced landmarks/other outliers.
@@ -11,8 +60,12 @@
 #'@export
 #'@return Returns a vector of individuals
 #'
+#'
+
+###Make seperate function, plot.comp, to compare 2 individuals. Use LMK_screen as a wrapper for LMK_compare -- this might be useful for ii?
+
 LMK_screen <- function(A, ref=NULL, gpa = TRUE ){
-  open3d()
+  
   
   p <- dim(A)[[1]]
   k <- dim(A)[[2]]
@@ -23,7 +76,7 @@ LMK_screen <- function(A, ref=NULL, gpa = TRUE ){
   
   if (is.null(alist)){alist <- paste("Ind",1:n, sep=".")}
   
-  flist <- matrix(NULL)
+  flist <- NULL
   
   if (is.null(ref)){
     ref <- mshape(A)
@@ -38,32 +91,32 @@ LMK_screen <- function(A, ref=NULL, gpa = TRUE ){
   
   ##otherwise, assume procrustes coordinates
   c <- 1
-  t <- t
+  t <- 1
+ 
+  
   for (i in 1:n){
-    i <- t
-    plot3d(ref, col = "red", axes = F, xlim = r, ylim = r, zlim = r, size = 4, xlab = "X", ylab = "Y", zlab = "Z")
-    points3d(A[,,i], col = "grey", size = 5)
-    text3d(colMeans(ref), pos = 3, texts = paste(alist[i], "compared to"))
-    text3d(colMeans(ref), pos = 1, texts = names(ref), col = "red")
-    for (j in 1:p){
-      lines3d(rbind(ref[j,], A[j,,i]))
-    }
-    ans <- readline(menu(c("Flag", "Don't Flag", "Previous (No Action)", "Next (No Action)"), title = "Flag for additional inspection? (pres Esc to exit)"))
+    LMK_compare_two(ref, A[,,i])
+    
+    
+    ans <- readline(menu(c("Flag", "Don't Flag", "Previous (No Action)", "Next (No Action)", "Esc"), title = "Flag for additional inspection? (pres Esc to exit)"))
     if (ans == 1){
-      flist[c,1] <- alist[i]
-      flist[c,2] <- i
+      flist <- rbind(flist, c(alist[i], i)) ###This doesn't seem to be working
       c <- c+1
       t <- t+1
       clear3d()
     } else if (ans == 3){
       t <- t-1
       clear3d()
-    } else {
+    } else if (ans == 5){
+     
+      return(flist)
+    }else{
       t<- t+1
       clear3d()
     }
     
     
   }
+ 
   return(flist)
 }

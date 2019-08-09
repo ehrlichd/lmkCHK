@@ -2,7 +2,7 @@
 % Please edit documentation in R/package-support.R
 \name{LMK_writeland_nts}
 \alias{LMK_writeland_nts}
-\title{Write DTA/NTS}
+\title{Confidence Ellipses}
 \usage{
 LMK_writeland_nts(A, filepath)
 }
@@ -12,6 +12,12 @@ LMK_writeland_nts(A, filepath)
 \item{filepath}{Filename/Filepath, including extension: .dta, or .nts}
 }
 \description{
+Draw confidence ellipses around data
+}
+\details{
+IMPLEMENT
+Write DTA/NTS
+
 Write 3D array as a .dta/.nts file
 }
 \author{
