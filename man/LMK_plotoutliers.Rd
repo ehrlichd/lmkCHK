@@ -9,7 +9,7 @@ LMK_plotoutliers(a, gpa = TRUE, plotALL = TRUE, ...)
 \arguments{
 \item{a}{Raw 3D coordinate data, procrustes aligned coordinate data, or an object of class == gpagen}
 
-\item{gpa}{Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done.}
+\item{gpa}{Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done. If TRUE, gpa-aligned coordinates and mshape will also be exported}
 
 \item{plotALL}{Logical, plot all specimens (and mean) in 3D space}
 

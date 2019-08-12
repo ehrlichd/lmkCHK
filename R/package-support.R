@@ -23,6 +23,26 @@ NULL
 
 
 
+#'Symmetrize
+#'
+#'Function to provide easy specification and handling of multistep symmetrization process
+#'
+#'Under full sequence landmarks are first estimated using bilatteral reflection. If missing data are still present, landmarks are estimated using TPS interpolation of n=3 nearest neighbors. Now complete LMK arrays are reflected a final time and averaged creating perfectly symmetrical configurations
+#'
+#'@param A A landmark configuration in the form p x k x n
+#'@param LMpair A matrix listing paried landmarks, those not listed are assumed to be midline
+#'
+LMK_sym <- function (A, LMpair){
+  ##Add on toggles for each stage to customize how symmetrization happens
+  a.mir <- fixLMmirror(A, LMpair)
+  
+  if (anyNA(a.mir)){a.mir <- fixLMtps(a.mir)$out}
+  
+  sym <- symmetrize(a.mir, LMpair)
+  
+  return(sym)
+}
+
 #'Confidence Ellipses
 #'
 #'Draw confidence ellipses around data

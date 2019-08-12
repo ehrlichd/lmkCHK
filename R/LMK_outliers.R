@@ -4,7 +4,7 @@
 #'
 #'
 #'@param a Raw 3D coordinate data, procrustes aligned coordinate data, or an object of class == gpagen
-#'@param gpa Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done.
+#'@param gpa Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done. If TRUE, gpa-aligned coordinates and mshape will also be exported
 #'@param plotALL Logical, plot all specimens (and mean) in 3D space
 #'
 #'@param ... Additional parameters to pass to gpagen
@@ -45,6 +45,7 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
   ####Plot procrustes aligned GrandMean shape and all observations
   
   if (plotALL == TRUE){
+    open3d()
     plot3d(grandM, xlim = r, ylim = r, zlim = r, xlab = "", axes = F, type = "s", col = "red", size = 1)
     
     for (i in 1:n){
@@ -93,7 +94,7 @@ LMK_plotoutliers <- function(a, gpa = TRUE, plotALL = TRUE, ...){
       sd(as.numeric(dist[,2]), na.rm = T), 
       range(as.numeric(dist[,2]), na.rm = T)), nrow = 7, ncol = 2)
   
-  out <- list("summary.info" = sum, "ind.info" = dist)
+  out <- list("summary.info" = sum, "ind.info" = dist, "proc.coords" = a, "mshape" = grandM)
   
   return(out)
 }

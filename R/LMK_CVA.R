@@ -1,3 +1,23 @@
+#'Shape Change Visualizations
+#'
+#'Easily visualize shape change and create relative warps for LMK data
+#'
+#'Attempt to comvine all of these into a single function
+#'@param dat Some form of landmark data of class array (p x k x n); gpagen (geomorph); PCA/CVA (morpho)
+#'
+#'@param ... Addititional arguments to pass to subsequent functions based on input data
+#'
+#'@return Hopefull, will return a list of helpful information and some nice plots
+#'
+LMK_viz <- function(dat, ...){
+  
+
+  if (class(dat)=="array"){
+    
+  }
+}
+
+
 #' CVA 2D Shape Change
 #' 
 #' Visualize Shape change in two dimenions of Morpho object.class 'CVA'
