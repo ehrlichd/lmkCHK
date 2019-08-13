@@ -11,6 +11,9 @@ LMK_sym(A, LMpair)
 
 \item{LMpair}{A matrix listing paried landmarks, those not listed are assumed to be midline}
 }
+\value{
+Returns a symmetrized landmark configuration with no missing data
+}
 \description{
 Function to provide easy specification and handling of multistep symmetrization process
 }

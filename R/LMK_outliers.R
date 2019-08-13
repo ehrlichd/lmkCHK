@@ -11,7 +11,7 @@
 #'
 #'@export
 #' 
-#'@return Returns a list of specimens and their squared procrustes distance to the mean shape
+#'@return Returns a list containing summary information of the dataset, individual procrustes distances, GPA aligned Procrustes Coordinates and mean shape configuration
 
 LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
   name <- deparse(substitute(A))

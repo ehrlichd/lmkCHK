@@ -16,7 +16,7 @@ LMK_plotoutliers(A, gpa = TRUE, plotALL = TRUE, ...)
 \item{...}{Additional parameters to pass to gpagen}
 }
 \value{
-Returns a list of specimens and their squared procrustes distance to the mean shape
+Returns a list containing summary information of the dataset, individual procrustes distances, GPA aligned Procrustes Coordinates and mean shape configuration
 }
 \description{
 Function to identify outliers visually

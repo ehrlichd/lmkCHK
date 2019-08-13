@@ -32,6 +32,11 @@ NULL
 #'@param A A landmark configuration in the form p x k x n
 #'@param LMpair A matrix listing paried landmarks, those not listed are assumed to be midline
 #'
+#'
+#'@export
+#'
+#'@return Returns a symmetrized landmark configuration with no missing data
+#'
 LMK_sym <- function (A, LMpair){
   ##Add on toggles for each stage to customize how symmetrization happens
   a.mir <- fixLMmirror(A, LMpair)
