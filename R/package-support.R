@@ -166,23 +166,36 @@ LMK_get_sliders <- function(c1){
 #' @export
 #' 
 LMK_euD <- function(A1, A2){
-  if ( length(dim(A1))==3 & length(dim(A2))==3){
-    if (dim(A1) != dim(A2)){stop("Arrays must have the same extent")}
+  
+  #####For Arrays####
+  
+  if (length(dim(A1))==3 & length(dim(A2))==3){
+    if (all(dim(A1) != dim(A2))){stop("Arrays must have the same extent")}
   
   
   l <- dim(A1)[[1]]
   n <- dim(A1)[[3]]
   
-  o1 <- matrix(data = NA,nrow = l, ncol = n, dimnames = list(dimnames(A1)[[1]], dimnames(A1)[[2]]))
+  if (is.null(dimnames(A1)[[1]])){
+    lmklbl <- paste("lmk", 1:l, sep = ".")
+  }
+  lmklbl <- dimnames(A1)[[1]]
+  
+  if (is.null(dimnames(A1)[[3]])){
+    indlbl <- paste("ind", 1:n, sep = ".")
+  }
+  indlbl <- dimnames(A1)[[3]]
+  
+  o1 <- matrix(data = NA,nrow = l, ncol = n, dimnames = list("lmk" = lmklbl, "ind" = indlbl))
   
   
-  for (c in 1:n){
+  for (i in 1:n){
     #for each individual
-    for (r in 1:l){
+    for (j in 1:l){
       #for each lmk
       
       #calculate distance
-      o1[r,c] <- sqrt(sum(((A1[r,1,c]-A2[r,1,c])^2), ((A1[r,2,c]-A2[r,2,c])^2), ((A1[r,3,c]-A2[r,3,c])^2)))
+      o1[j,i] <- sqrt(sum(((A1[j,1,i]-A2[j,1,i])^2), ((A1[j,2,i]-A2[j,2,i])^2), ((A1[j,3,i]-A2[j,3,i])^2)))
     }
     
   }
@@ -193,8 +206,29 @@ LMK_euD <- function(A1, A2){
   
   out <- list("all.dif"= all.dif, "by.lmk" = lmk.dif, "by.ind" = ind.dif)
   return(out)
-  } ###figure out how to generalize input and internal calcs
-}
+  
+  } 
+  
+  
+  #####For Matrices#####
+  
+  else if (length(dim(A1))==2 & length(dim(A2))==2){
+    if (all(dim(A1) != dim(A2))){stop("Matrices must have the same extent")}
+    
+    l <- dim(A1)[[1]]
+    
+    o1 <- numeric(l)
+    for (i in 1:l){
+    #for each lmk
+      
+    #calculate distance
+    o1[i] <- sqrt(sum(((A1[i,1]-A2[i,1])^2), ((A1[i,2]-A2[i,2])^2), ((A1[i,3]-A2[i,3])^2)))
+        }
+      return (o1)  
+      }
+      
+  }
+
 
 
 #####
