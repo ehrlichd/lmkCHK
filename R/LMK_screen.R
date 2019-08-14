@@ -8,15 +8,15 @@
 #' 
 #' @param A1 A 3D array of landmark data; A reference 
 #' @param A2 A second 3D array of landmark data to compare to the reference
-#' 
+#' @param new Should a new graphing window be opened (Default is to overwrite the previous)
 #' 
 #' 
 #' @export
 #' 
-LMK_compare_two <- function(A1, A2){
+LMK_compare_two <- function(A1, A2, new = FALSE){
   #if (all(dim(A1)) != dim(A2)){stop("Landmark configurations must be the same")} ##No idea why this won't run "In addition: Warning message: In if (all(dim(A1)) != dim(A2)) { : the condition has length > 1 and only the first element will be used"
-  
-  open3d()
+  if (new == TRUE){open3d()}
+  clear3d()
   
   r <- range(range(A1),range(A2))
   p <- dim(A1)[[1]]
@@ -37,8 +37,8 @@ LMK_compare_two <- function(A1, A2){
   else {
     plot3d(A1, col = "red", axes = F, xlim = r, ylim = r, zlim = r, size = 4, xlab = "X", ylab = "Y", zlab = "Z")
     points3d(A2, col = "grey", size = 5)
-    text3d(colMeans(A1), pos = 3, texts = paste(names(A2), "compared to"))
-    text3d(colMeans(A1), pos = 1, texts = names(A1), col = "red")
+    text3d(colMeans(A1), pos = 3, texts = paste(deparse(substitute(A2)), "compared to"))
+    text3d(colMeans(A1), pos = 1, texts = deparse(substitute(A1)), col = "red")
     for (j in 1:p){lines3d(rbind(A1[j,], A2[j,]))
     }
     }
@@ -104,9 +104,11 @@ LMK_screen <- function(A, ref=NULL, gpa = TRUE ){
       c <- c+1
       t <- t+1
       clear3d()
+      
     } else if (ans == 3){
       t <- t-1
       clear3d()
+      
     } else if (ans == 5){
      
       return(flist)

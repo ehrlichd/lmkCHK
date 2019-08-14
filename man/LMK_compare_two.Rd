@@ -4,12 +4,14 @@
 \alias{LMK_compare_two}
 \title{Compare Two landmark arrays}
 \usage{
-LMK_compare_two(A1, A2)
+LMK_compare_two(A1, A2, new = FALSE)
 }
 \arguments{
 \item{A1}{A 3D array of landmark data; A reference}
 
 \item{A2}{A second 3D array of landmark data to compare to the reference}
+
+\item{new}{Should a new graphing window be opened (Default is to overwrite the previous)}
 }
 \description{
 Plot 2 landmark configurations in 3D space.

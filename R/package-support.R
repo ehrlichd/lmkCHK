@@ -6,9 +6,9 @@
 #'
 #'@description Helper functions for visualizing and screening 2D/3D landmark data.
 #'
-#'@import rgl
-#'@import geomorph
 #'@import Morpho
+#'@import geomorph
+#'@import rgl
 #'@import stats
 #'@import utils
 #'@import graphics
@@ -69,14 +69,14 @@ LMK_sym <- function (A, LMpair){
 #'
 #'
 LMK_writeland_nts <- function(A, filepath){
-  p <- dim(x)[1]
-  k <- dim(x)[2]
-  n <- dim(x)[3]
-  lbls <- dimnames(x)[[3]]
+  p <- dim(A)[1]
+  k <- dim(A)[2]
+  n <- dim(A)[3]
+  lbls <- dimnames(A)[[3]]
   
   #check/format missing data
-  if (anyNA(x)){
-    x[is.na(x)] = 9999
+  if (anyNA(A)){
+    A[is.na(A)] = 9999
     h = paste(1, paste(n,"L", sep=""), (p*k), 1, 9999, "Dim=3", sep = " ")} else {
       h = paste(1, paste(n,"L", sep=""), (p*k), 0, "Dim=3", sep = " ")
     }
@@ -88,9 +88,10 @@ LMK_writeland_nts <- function(A, filepath){
   
   #write coords
   for(i in 1:n){
-    write(c(t(x[,,i]), "\n"), file=filepath, append=T, sep = "\t", ncolumns = 3)
+    write(c(t(A[,,i]), "\n"), file=filepath, append=T, sep = "\t", ncolumns = 3)
     
   }
+  close(filepath)
 }
 
 #####
