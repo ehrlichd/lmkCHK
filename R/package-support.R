@@ -91,7 +91,7 @@ LMK_writeland_nts <- function(A, filepath){
     write(c(t(A[,,i]), "\n"), file=filepath, append=T, sep = "\t", ncolumns = 3)
     
   }
-  close(filepath)
+  
 }
 
 #####
