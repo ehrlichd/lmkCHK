@@ -25,7 +25,10 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
   
   
   if (class(A)=="gpagen"){A <- A$coords}
-  if (gpa == TRUE) { A <- gpagen(A, ...)$coords}
+  if (gpa == TRUE) { 
+    gA <- gpagen(A, ...)
+    A <- gA$coords
+    }
   
   ##Create tables and variables for later
   dist <- matrix(NA, nrow = n, ncol = 3)
@@ -102,7 +105,9 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
       sd(as.numeric(dist[,2]), na.rm = T), 
       range(as.numeric(dist[,2]), na.rm = T)), nrow = 7, ncol = 2)
   
-  out <- list("summary.info" = sum, "ind.info" = dist, "proc.coords" = A, "mshape" = grandM)
+  
+  if(gpa == TRUE){out <- list("summary.info" = as.numeric(sum), "ind.info" = as.numeric(dist), "GPA" = gA)}
+  out <- list("summary.info" = as.numeric(sum), "ind.info" = as.numeric(dist), "proc.coords" = A, "mshape" = grandM)
   
   return(out)
 }
