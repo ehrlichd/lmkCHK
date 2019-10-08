@@ -16,7 +16,9 @@
 LMK_compare_two <- function(A1, A2, new = FALSE){
   #if (all(dim(A1)) != dim(A2)){stop("Landmark configurations must be the same")} ##No idea why this won't run "In addition: Warning message: In if (all(dim(A1)) != dim(A2)) { : the condition has length > 1 and only the first element will be used"
   if (new == TRUE){open3d()}
-  clear3d()
+  
+  
+  ###Instead of clearing 3D, find a better way to control plots/outputs. Simple way to plot all shape changes?
   
   r <- range(range(A1),range(A2))
   p <- dim(A1)[[1]]
