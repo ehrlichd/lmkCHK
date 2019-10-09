@@ -175,6 +175,12 @@ LMK_euD <- function(A1, A2){
   
   #####For Arrays####
   
+  ###For inter landmark distances (ie 2 points)
+  if (length(A1)==3 & length(A2)==3){
+    out <- ((A1[1] - A2[1])^2 + (A1[2] - A2[2])^2 + (A1[3]-A2[3])^2)^.5
+    return(out)
+      }
+  
   if (length(dim(A1))==3 & length(dim(A2))==3){
     if (all(dim(A1) != dim(A2))){stop("Arrays must have the same extent")}
   
