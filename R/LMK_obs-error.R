@@ -31,8 +31,12 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   
   #l landmarks
   l <- dim(obs1)[1]
+  #k dimensions
+  k <- dim(obs1)[2]
   #n individuals 
   n <- dim(obs1)[3]
+  
+  
   
   if (!is.null(lmk.lbl)){
     lbl <- list("lmk" = lmk.lbl, "xyz" = c("x","y","z"), "ind" = dimnames(raw)[[1]]) 
@@ -40,14 +44,15 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
     lbl <- list("lmk" = paste("lmk",1:l), "xyz" = c("x","y","z"), "ind" = dimnames(raw)[[1]])
   }
   
+  if (k == 2){ lbl[[2]] <- c("x", "y")}
   
   
   ###1: procrustes superimposition WITHOUT scaling
-  araw <- geomorph::arrayspecs(raw, l, 3)
+  araw <- geomorph::arrayspecs(raw, l, k)
   #requires shapes package
   
-  aln <- geomorph::gpagen(araw,ProcD = F)
-  aln <- LMK_bscale(aln$coords, aln$Csize)
+  gpa <- geomorph::gpagen(araw,ProcD = F)
+  aln <- LMK_bscale(gpa$coords, gpa$Csize)
   
   dimnames(aln) <- lbl
   
@@ -67,7 +72,9 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   
   
   ###5. Formatting
-  pretty <- as.data.frame(cbind(d.out$lmk.dif, icc.out[,c(1,3,4,6,7,9:12)]))
+  
+  ###This part in particular needs to be reformatted with EXPLICIT calls to variables/colnames
+  pretty <- as.data.frame(cbind(d.out$by.lmk, icc.out[,c(1,3,4,6,7,9:12)]))
   pretty$avg.ICC <- rowMeans(pretty[,c(2,4,6)])
   pretty$avg.sig <- rowMeans(pretty[,c(3,5,7)])
   pretty$avg.ChrA <- rowMeans(pretty[,c(8:10)])
@@ -75,6 +82,7 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
     out <- list("eu.D" = d.out, "icc" = icc.out, "quick" = pretty)
   } else {out <- pretty}
   
+    
+  
   return(out)
 }
-

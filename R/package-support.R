@@ -186,6 +186,7 @@ LMK_euD <- function(A1, A2){
   
   
   l <- dim(A1)[[1]]
+  k <- dim(A1)[[2]]
   n <- dim(A1)[[3]]
   
   if (is.null(dimnames(A1)[[1]])){
@@ -207,7 +208,14 @@ LMK_euD <- function(A1, A2){
       #for each lmk
       
       #calculate distance
+      if (k == 3){
+        ## for 3 dimensional data
       o1[j,i] <- sqrt(sum(((A1[j,1,i]-A2[j,1,i])^2), ((A1[j,2,i]-A2[j,2,i])^2), ((A1[j,3,i]-A2[j,3,i])^2)))
+      } else {
+        ## for 2 dimensional data
+        o1[j,i] <- sqrt(sum(((A1[j,1,i]-A2[j,1,i])^2), ((A1[j,2,i]-A2[j,2,i])^2)))
+        
+      }
     }
     
   }
@@ -223,6 +231,7 @@ LMK_euD <- function(A1, A2){
   
   
   #####For Matrices#####
+  ### note: this refers to the structure of the data (array vs matrix) rather than the dimensionality of the data (2D vs 3D landmarks)
   
   else if (length(dim(A1))==2 & length(dim(A2))==2){
     if (all(dim(A1) != dim(A2))){stop("Matrices must have the same extent")}
@@ -268,13 +277,13 @@ LMK_colramp <- function(grp, mute = TRUE){
   c.grp <- as.character(grp)
   #generate character list to recieve colors
   
-  l <- length(levels(grp))
+  l <- length(levels(f.grp))
   if( mute == TRUE){
-    cr <- grDevices::rainbow(length(levels(f.grp)), s = 0.4, v = 1)
+    cr <- grDevices::rainbow(l, s = 0.4, v = 1)
     #generate color ramp based on levels of data
     
   }else{
-    cr <- grDevices::rainbow(length(levels(f.grp)))
+    cr <- grDevices::rainbow(l)
     #generate color ramp based on levels of data
     
   }
@@ -365,43 +374,79 @@ LMK_grp_apply <- function(d, f, grp){
 #' 
 #' 
 LMK_iccA <- function(obs1, obs2){
+  
+  ### 10/2019 some issue with the chronbach's alpha is causes this whole function to crash
+  
   #inter- or intra- oberserer error
   #where obs1 and obs2 are two identical landmark data sets
   #function to perform inter class correlation and reports F- and p- values, chronbach's alpha, as well as euclidean distance for a set of landmarks
   #currently assumes: .dta format, 3 dimensions, 34 lmks, object symmetry
   #just get it from psych package
+  
+  
  
   l <- dim(obs1)[[1]]
-  d <- dim(obs1)[[2]]
-  out <- data.frame("ICC.X" = numeric(l), "f.X" = numeric(l),"sig.X" = numeric(l), "ICC.Y" = numeric(l),"f.Y" = numeric(l), "sig.Y" = numeric(l), "ICC.Z" = numeric(l), "f.Z"=numeric(l),"sig.Z" = numeric(l),"CrA.X" = numeric(l), "CrA.Y" = numeric(l), "CrA.Z" = numeric(l),row.names = dimnames(obs1)[[1]])
+  k <- dim(obs1)[[2]]
+  n <- dim(obs1)[[3]]
   
-  for (r in 1:l){
-    tx <- psych::ICC(as.matrix(cbind(obs1[r,1,], obs2[r,1,])), lmer=FALSE)
-    ty <- psych::ICC(as.matrix(cbind(obs1[r,2,], obs2[r,2,])), lmer=FALSE)
-    tz <- psych::ICC(as.matrix(cbind(obs1[r,3,], obs2[r,3,])), lmer=FALSE)
-    ax <- psych::alpha(as.matrix(cbind(obs1[r,1,], obs2[r,1,])))
-    ay <- psych::alpha(as.matrix(cbind(obs1[r,2,], obs2[r,2,])))
-    az <- psych::alpha(as.matrix(cbind(obs1[r,3,], obs2[r,3,])))
+  if (k==3){
+    out <- data.frame("ICC.X" = numeric(l), "f.X" = numeric(l),"sig.X" = numeric(l), "ICC.Y" = numeric(l),"f.Y" = numeric(l), "sig.Y" = numeric(l), "ICC.Z" = numeric(l), "f.Z"=numeric(l),"sig.Z" = numeric(l),"CrA.X" = numeric(l), "CrA.Y" = numeric(l), "CrA.Z" = numeric(l),row.names = dimnames(obs1)[[1]])
+    for (r in 1:l){
+      tx <- psych::ICC(as.matrix(cbind(obs1[r,1,], obs2[r,1,])), lmer=FALSE)
+      ty <- psych::ICC(as.matrix(cbind(obs1[r,2,], obs2[r,2,])), lmer=FALSE)
+      tz <- psych::ICC(as.matrix(cbind(obs1[r,3,], obs2[r,3,])), lmer=FALSE)
+      ax <- psych::alpha(as.data.frame(cbind(obs1[10,1,], obs2[10,1,])))
+      ay <- psych::alpha(as.matrix(cbind(obs1[r,2,], obs2[r,2,])))
+      az <- psych::alpha(as.matrix(cbind(obs1[r,3,], obs2[r,3,])))
+      
+      out[r,1] <- tx$results$ICC[3]
+      out[r,2] <- tx$results$F[3]
+      out[r,3] <- tx$results$p[3]
+      
+      out[r,4] <- ty$results$ICC[3]
+      out[r,5] <- ty$results$F[3]
+      out[r,6] <- ty$results$p[3]
+      
+      out[r,7] <- tz$results$ICC[3]
+      out[r,8] <- tz$results$F[3]
+      out[r,9] <- tz$results$p[3]
+      
+      out[r,10] <- ax$total[1]
+      out[r,11] <- ay$total[1]
+      out[r,12] <- az$total[1]
+      }
+   
+  } else {
     
-    out[r,1] <- tx$results$ICC[3]
-    out[r,2] <- tx$results$F[3]
-    out[r,3] <- tx$results$p[3]
+    ##### need to streamline 2D data steps ####
     
-    
-    out[r,4] <- ty$results$ICC[3]
-    out[r,5] <- ty$results$F[3]
-    out[r,6] <- ty$results$p[3]
-    
-    out[r,7] <- tz$results$ICC[3]
-    out[r,8] <- tz$results$F[3]
-    out[r,9] <- tz$results$p[3]
-    
-    out[r,10] <- ax$total[1]
-    out[r,11] <- ay$total[1]
-    out[r,12] <- az$total[1]
+    out <- data.frame("ICC.X" = numeric(l), "f.X" = numeric(l),"sig.X" = numeric(l), "ICC.Y" = numeric(l),"f.Y" = numeric(l), "sig.Y" = numeric(l), "ICC.Z" = numeric(l), "f.Z"=numeric(l),"sig.Z" = numeric(l),"CrA.X" = numeric(l), "CrA.Y" = numeric(l), "CrA.Z" = numeric(l),row.names = dimnames(obs1)[[1]])
+    for (r in 1:l){
+      tx <- psych::ICC(as.matrix(cbind(obs1[r,1,], obs2[r,1,])), lmer=FALSE)
+      ty <- psych::ICC(as.matrix(cbind(obs1[r,2,], obs2[r,2,])), lmer=FALSE)
+      tz <- NA
+      ax <- psych::alpha(as.data.frame(cbind(obs1[10,1,], obs2[10,1,])))
+      ay <- psych::alpha(as.matrix(cbind(obs1[r,2,], obs2[r,2,])))
+      az <- NA
+      
+      out[r,1] <- tx$results$ICC[3]
+      out[r,2] <- tx$results$F[3]
+      out[r,3] <- tx$results$p[3]
+      
+      out[r,4] <- ty$results$ICC[3]
+      out[r,5] <- ty$results$F[3]
+      out[r,6] <- ty$results$p[3]
+      
+      out[r,7] <- NA
+      out[r,8] <- NA
+      out[r,9] <- NA
+      
+      out[r,10] <- ax$total[1]
+      out[r,11] <- ay$total[1]
+      out[r,12] <- NA
+    }
     
   }
-  
   return(out)
 }
 
