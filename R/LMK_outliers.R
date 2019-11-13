@@ -42,7 +42,7 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
   grandM <- mshape(A)
   
   ##Range of data
-  r <- range(A)
+  r <- range(A)*1.1 
   
   
   ####Plot procrustes aligned GrandMean shape and all observations
