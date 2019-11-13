@@ -106,8 +106,8 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
       range(as.numeric(dist[,2]), na.rm = T)), nrow = 7, ncol = 2)
   
   
-  if(gpa == TRUE){out <- list("summary.info" = as.numeric(sum), "ind.info" = as.numeric(dist), "GPA" = gA)}
-  out <- list("summary.info" = as.numeric(sum), "ind.info" = as.numeric(dist), "proc.coords" = A, "mshape" = grandM)
+  if(gpa == TRUE){out <- list("summary.info" = sum, "ind.info" = dist, "GPA" = gA)}
+  out <- list("summary.info" = sum, "ind.info" = dist, "proc.coords" = A, "mshape" = grandM)
   
   return(out)
 }
