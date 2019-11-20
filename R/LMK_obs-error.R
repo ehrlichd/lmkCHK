@@ -51,8 +51,12 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   araw <- geomorph::arrayspecs(raw, l, k)
   #requires shapes package
   
-  gpa <- geomorph::gpagen(araw,ProcD = F)
-  aln <- LMK_bscale(gpa$coords, gpa$Csize)
+  
+  #### 11/2019: bscale not scaling correctly
+  #gpa <- geomorph::gpagen(araw,ProcD = F)
+  #aln <- LMK_bscale(gpa$coords, gpa$Csize)
+  
+  aln <- Morpho::ProcGPA(araw, scale = F , reflection = F, CSinit = F)
   
   dimnames(aln) <- lbl
   
