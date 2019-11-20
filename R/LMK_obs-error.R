@@ -51,8 +51,12 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   araw <- geomorph::arrayspecs(raw, l, k)
   #requires shapes package
   
-  gpa <- geomorph::gpagen(araw,ProcD = F)
-  aln <- LMK_bscale(gpa$coords, gpa$Csize)
+  
+  #### 11/2019: bscale not scaling correctly
+  #gpa <- geomorph::gpagen(araw,ProcD = F)
+  #aln <- LMK_bscale(gpa$coords, gpa$Csize)
+  
+  aln <- Morpho::ProcGPA(araw, scale = F , reflection = F, CSinit = F)$rotated
   
   dimnames(aln) <- lbl
   
@@ -75,9 +79,9 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   
   ###This part in particular needs to be reformatted with EXPLICIT calls to variables/colnames
   pretty <- as.data.frame(cbind(d.out$by.lmk, icc.out[,c(1,3,4,6,7,9:12)]))
-  pretty$avg.ICC <- rowMeans(pretty[,c(2,4,6)])
-  pretty$avg.sig <- rowMeans(pretty[,c(3,5,7)])
-  pretty$avg.ChrA <- rowMeans(pretty[,c(8:10)])
+  pretty$avg.ICC <- rowMeans(pretty[,c(2,4,6)],na.rm = T)
+  pretty$avg.sig <- rowMeans(pretty[,c(3,5,7)],na.rm = T)
+  pretty$avg.ChrA <- rowMeans(pretty[,c(8:10)],na.rm = T)
   if (full == TRUE){
     out <- list("eu.D" = d.out, "icc" = icc.out, "quick" = pretty)
   } else {out <- pretty}
