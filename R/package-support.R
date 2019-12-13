@@ -375,7 +375,7 @@ LMK_grp_apply <- function(d, f, grp){
 #' 
 LMK_iccA <- function(obs1, obs2){
   
-  ### 10/2019 some issue with the chronbach's alpha is causes this whole function to crash
+ 
   
   #inter- or intra- oberserer error
   #where obs1 and obs2 are two identical landmark data sets
@@ -395,7 +395,7 @@ LMK_iccA <- function(obs1, obs2){
       tx <- psych::ICC(as.matrix(cbind(obs1[r,1,], obs2[r,1,])), lmer=FALSE)
       ty <- psych::ICC(as.matrix(cbind(obs1[r,2,], obs2[r,2,])), lmer=FALSE)
       tz <- psych::ICC(as.matrix(cbind(obs1[r,3,], obs2[r,3,])), lmer=FALSE)
-      ax <- psych::alpha(as.data.frame(cbind(obs1[10,1,], obs2[10,1,])))
+      ax <- psych::alpha(as.matrix(cbind(obs1[r,1,], obs2[r,1,])))
       ay <- psych::alpha(as.matrix(cbind(obs1[r,2,], obs2[r,2,])))
       az <- psych::alpha(as.matrix(cbind(obs1[r,3,], obs2[r,3,])))
       
@@ -425,7 +425,7 @@ LMK_iccA <- function(obs1, obs2){
       tx <- psych::ICC(as.matrix(cbind(obs1[r,1,], obs2[r,1,])), lmer=FALSE)
       ty <- psych::ICC(as.matrix(cbind(obs1[r,2,], obs2[r,2,])), lmer=FALSE)
       tz <- NA
-      ax <- psych::alpha(as.data.frame(cbind(obs1[10,1,], obs2[10,1,])))
+      ax <- psych::alpha(as.matrix(cbind(obs1[r,1,], obs2[r,1,])))
       ay <- psych::alpha(as.matrix(cbind(obs1[r,2,], obs2[r,2,])))
       az <- NA
       
