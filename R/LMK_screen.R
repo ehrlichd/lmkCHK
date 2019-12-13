@@ -55,6 +55,33 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 
 
 
+#' Compare Wireframes
+#' 
+#' Function to plot landmark configurations as wireframes, and compare directly.
+#' 
+#' Plot overlapping landmark wireframes after MorphoJ
+#' 
+#' @param A1 a reference
+#' @param A2 a target
+#' @param links a wireframe listing landmarks to be linked
+#' 
+#' @export
+#' 
+
+LMK_wireframe <- function(A1, A2, links = NULL){
+  
+  r <- range(A1,A2)
+  p <- dim(A1)[[1]]
+  k <- dim(A1)[[2]]
+  
+  plot3d(rbind(A1,A2), type = "n")
+  for (i in 1:p){
+    lines3d(A1[links[p,],,], col = "red")
+    lines3d(A2[links[p,],,], col = "blue")
+  }
+}
+
+
 #'Screen Data
 #'
 #'Interactive function to compare individuals in an array to grandmean (or other refrence) to spot misplaced landmarks/other outliers.
