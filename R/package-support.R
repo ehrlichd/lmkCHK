@@ -452,31 +452,4 @@ LMK_iccA <- function(obs1, obs2){
 
 
 
-#' Compare two wireframes
-#' 
-#' Plots two wireframe configurations on top of each other. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
-#' 
-#' @param A1 a 2D/3D landmark set
-#' @param A2 a 2D/3D landmark set
-#' @param links a consensus wireframe
-#' @param cols a list of two colors to use for plots (default Red, Blue)
-#' 
-#' 
-#'
-#' 
-#' @export
-#' 
-#' 
-LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL){
-    
-    r <- range(A1,A2)
-    p <- dim(A1)[[1]]
-    k <- dim(A1)[[2]]
-    l <- dim(links)[[1]]
-    plot3d(rbind(A1,A2), type = "n", xlim = r, ylim = r, zlim = r, axes = F)
-    for (i in 1:l){
-      segments3d(A1[links[i,],], col = cols[1])
-      segments3d(A2[links[i,],], col = cols[2])
-    }
-  }
-  
+

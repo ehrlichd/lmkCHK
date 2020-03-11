@@ -56,30 +56,38 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 
 
 #' Compare Wireframes
+#'
+#'Function to plot two landmark configurations as wireframes, and compare directly, after MorphoJ
 #' 
-#' Function to plot landmark configurations as wireframes, and compare directly.
-#' 
-#' Plot overlapping landmark wireframes after MorphoJ
 #' 
 #' @param A1 a reference
 #' @param A2 a target
 #' @param links a wireframe listing landmarks to be linked
+#' @param cols a list of two colors to use for plots (default Red, Blue)
+#' 
+#' 
+#'Plots two wireframe configurations on top of each other. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 #' 
 #' @export
 #' 
+#' 
 
-LMK_wireframe <- function(A1, A2, links = NULL){
+LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL){
   
   r <- range(A1,A2)
   p <- dim(A1)[[1]]
   k <- dim(A1)[[2]]
-  
-  plot3d(rbind(A1,A2), type = "n")
-  for (i in 1:p){
-    lines3d(A1[links[p,],,], col = "red")
-    lines3d(A2[links[p,],,], col = "blue")
+  l <- dim(links)[[1]]
+  plot3d(rbind(A1,A2), type = "n", xlim = r, ylim = r, zlim = r, axes = F)
+  for (i in 1:l){
+    segments3d(A1[links[i,],], col = cols[1])
+    segments3d(A2[links[i,],], col = cols[2])
   }
 }
+
+
+
+
 
 
 #'Screen Data
