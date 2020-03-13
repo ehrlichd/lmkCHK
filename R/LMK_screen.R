@@ -64,7 +64,7 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' @param A2 a target
 #' @param links a wireframe listing landmarks to be linked
 #' @param cols a list of two colors to use for plots (default Red, Blue)
-#' 
+#' @param pts Logical, should points be plotted as well as wireframe
 #' 
 #'Plots two wireframe configurations on top of each other. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 #' 
@@ -72,13 +72,17 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' 
 #' 
 
-LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL){
+LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL, pts = TRUE){
   
   r <- range(A1,A2)
   p <- dim(A1)[[1]]
   k <- dim(A1)[[2]]
   l <- dim(links)[[1]]
   plot3d(rbind(A1,A2), type = "n", xlim = r, ylim = r, zlim = r, axes = F)
+  if(pts == TRUE){
+    points3d(A1, col = cols[1])
+    points3d(A2, col = cols[2])
+  }
   for (i in 1:l){
     segments3d(A1[links[i,],], col = cols[1])
     segments3d(A2[links[i,],], col = cols[2])

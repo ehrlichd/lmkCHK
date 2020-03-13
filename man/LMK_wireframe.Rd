@@ -4,19 +4,21 @@
 \alias{LMK_wireframe}
 \title{Compare Wireframes}
 \usage{
-LMK_wireframe(A1, A2, cols = c("red", "blue"), links = NULL)
+LMK_wireframe(A1, A2, cols = c("red", "blue"), links = NULL,
+  pts = TRUE)
 }
 \arguments{
 \item{A1}{a reference}
 
 \item{A2}{a target}
 
-\item{cols}{a list of two colors to use for plots (default Red, Blue)
-
-
-Plots two wireframe configurations on top of each other. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
+\item{cols}{a list of two colors to use for plots (default Red, Blue)}
 
 \item{links}{a wireframe listing landmarks to be linked}
+
+\item{pts}{Logical, should points be plotted as well as wireframe
+
+Plots two wireframe configurations on top of each other. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
 }
 \description{
 Function to plot two landmark configurations as wireframes, and compare directly, after MorphoJ
