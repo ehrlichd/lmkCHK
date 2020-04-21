@@ -48,11 +48,96 @@ LMK_sym <- function (A, LMpair){
   return(sym)
 }
 
+
+
+
+
+
 #'Confidence Ellipses
 #'
 #'Draw confidence ellipses around data
 #'
-#'IMPLEMENT
+#'@param dat data to be plotted in matrix form [X,Y]
+#'@param ci Confidence interval to be plotted. Must be one of c(67.5, 90, 95,99)
+#'@param lineCol Color for the line. Currently takes hsv() format 
+#'@param fillCol color for the fill. Currently only takes hsv() format, set NULL for no fill
+#'@param smoothness Smoothness for ellipses. Defualt should be sufficient but is customizable.
+#'
+#'
+#'@export
+
+
+LMK_ellipse <- function(dat, ci=c(67.5,90,95,99), lineCol, fillCol, smoothness = 20){
+
+##set smoothness of the circle (manually), the greater the number, the smoother it will be
+sm = 20
+##90% inside curve = 4.605
+##95% inside curve = 5.991
+##99% inside curve = 9.210
+
+if ( ci == 90){
+  chi.v <- 4.605
+} else if (ci ==95) {
+  chi.v <- 5.991
+} else if (ci == 99){
+  chi.v <- 9.210
+} else if (ci == 67.5){
+  chi.v <- 2.25
+}  else {
+  stop("Invalid CI, please choose either 90,95, or 99")
+}
+
+
+cov.dat <- cov(dat)
+cent <- t(colMeans(dat))
+
+##trace and determinate of cov matrix
+tr <- sum(cov.dat[1,1], cov.dat[2,2])
+
+det <- ((cov.dat[1,1]*cov.dat[2,2]) - (cov.dat[1,2]*cov.dat[2,1]))
+
+##determine eigen values
+ei1 <- (tr + ((tr^2) - 4*det)^.5)/2
+ei2 <- tr-ei1
+
+##determine length of radii
+ei.a <- (ei1^.5) * (chi.v^.5)
+ei.b <- (ei2^.5) * (chi.v^.5) 
+
+
+##calculate rotation of ellipse
+###NOTE: these terms may need to be flipped
+th <- atan2((ei1-cov.dat[1,1]), cov.dat[1,2])
+
+##rotation matrix
+q <- matrix(nrow = 2, ncol = 2)
+q[1,1] <- cos(th)
+q[2,2] <- cos(th)
+q[2,1] <- sin(th)
+q[1,2] <- sin(th)*-1
+
+##generate points along ellipse
+#first, generate equidistant points in radians along unit circle
+
+circ <- matrix(nrow = 2*sm+1, ncol = 3)
+
+for(i in 1:dim(circ)[1]){
+  circ[i,1] <- (i-1) * (pi/sm)
+  circ[i,2] <- (q[1,1] * ei.a * cos(circ[i,1]) + q[1,2] * ei.b * sin(circ[i,1])) + cent[1,1]
+  circ[i,3] <- (q[2,1] * ei.a * cos(circ[i,1]) + q[2,2] * ei.b * sin(circ[i,1])) + cent[1,2]
+}
+
+
+if (is.null(fillCol)){
+  lines(circ[,c(2,3)], col = linesCol)
+  } else {
+    polygon(circ[,c(2,3)], col = fillCol) ## Make sure to set alfa 
+    lines(circ[,c(2,3)], col = linesCol, lwd = 1.5)
+  }
+
+
+}
+
 
 #'Write DTA/NTS
 #'
