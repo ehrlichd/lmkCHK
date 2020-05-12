@@ -24,7 +24,7 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
   r <- range(range(A1),range(A2))
   p <- dim(A1)[[1]]
   k <- dim(A1)[[2]]
-  if (length(dim(A1))==3){
+  if (length(dim(A1))==3){ ## to compare groups
     n <- dim(A1)[[3]]
     
     for (i in 1:n){
@@ -64,28 +64,42 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' @param A2 a target
 #' @param links a wireframe listing landmarks to be linked
 #' @param cols a list of two colors to use for plots (default Red, Blue)
-#' @param pts Logical, should points be plotted as well as wireframe
+#' @param pts Should landmarks be plottes as points, spheres, or not at all.
+#' @param rad radius to plot for spheres, defualt is .001. Unclear how project specific
+#' @param vectors Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky
 #' 
-#'Plots two wireframe configurations on top of each other. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
+#'Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 #' 
 #' @export
 #' 
 #' 
 
-LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL, pts = TRUE){
+LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL, pts = c("point", "sphere", "none"), rad = c(.001, .001), vectors = FALSE){
   
   r <- range(A1,A2)
   p <- dim(A1)[[1]]
   k <- dim(A1)[[2]]
   l <- dim(links)[[1]]
+  
+  
   plot3d(rbind(A1,A2), type = "n", xlim = r, ylim = r, zlim = r, axes = F)
-  if(pts == TRUE){
+  if(pts == "point"){
     points3d(A1, col = cols[1])
     points3d(A2, col = cols[2])
+  } else if (pts =="sphere"){
+    spheres3d(A1, col = cols[1], radius = rad)
+    spheres3d(A2, col = cols[2], radius = rad)
   }
-  for (i in 1:l){
-    segments3d(A1[links[i,],], col = cols[1])
-    segments3d(A2[links[i,],], col = cols[2])
+  if(!is.null(links)){
+    
+    for (i in 1:l){
+      segments3d(A1[links[i,],], col = cols[1])
+      segments3d(A2[links[i,],], col = cols[2])
+
+    }
+  }
+  if(vectors == TRUE){
+    
   }
 }
 

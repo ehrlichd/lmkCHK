@@ -49,6 +49,101 @@ LMK_sym <- function (A, LMpair){
 }
 
 
+##### Plotting
+
+#' @param type One of c("shades, "tints") to plot
+#' @param transparency Set color transparency (alpha) from 0 (invisible) to 1 (opaque). Default is opaque
+#' 
+#' @return Returns a matrix of n colors listed in 3 formats: Rcolor, RGB, and HSV.
+#' 
+#'
+#' @export
+#'
+
+LMK_colpick <- function(n=1, type = c("shades", "tints"), transparency = 1){
+  
+  tr <- transparency 
+  out <- matrix(nrow = n, ncol = 8)
+  colnames(out) <- c("R.color", "R", "G","B","H","S","V","alpha")
+  
+  ## plot shades or tints
+  
+  plot(1:100, type = "n")
+  if (type == "tints"){
+    for( i in 1:100){
+      for(j in 1:100){
+        points(i,j,col = hsv(i/100, s=j/100, v = 100/100), pch = 16, cex = 2.5)
+      }
+    }
+  } else {
+    for( i in 1:100){
+      for(j in 1:100){
+        points(i,j,col = hsv(i/100, s=100/100, v = j/100), pch = 16, cex = 2.5)
+      } 
+    }  
+  }
+  
+  ### Pick the colors
+  print(paste("Choose", n, "colors"))
+  print("Press [Esc] to exit")
+  
+  cols <- locator(n=n)
+  
+  if (type =="tints"){
+    h <- cols$x/100
+    s <- cols$y/100
+    v <- rep(1,n) 
+  } else {
+    h <- cols$x/100
+    s <- rep(1,n)
+    v <- cols$y/100
+  } 
+  
+  out[,1] <- hsv(h, s, v, tr) ## Rcol
+  out[,2:4] <- col2rgb(out[,1]) ## RBG
+  out[,5] <- h
+  out[,6] <- s
+  out[,7] <- v
+  out[,8] <- tr
+  
+  return(out)
+  
+}
+
+
+
+
+
+
+#' limset
+#'
+#'
+#' Function to easily set plot buffer
+#'
+#' Takes a vector of data, calculates the range of data and scales it by a factor. Returns new range of length=2
+#'
+#' @param x A vector to be plotted
+#' @param factor to expand the data (default=1.2)
+#'
+#' @value Returns a value of length 2, the scaled range
+#'
+#' @export
+
+
+
+
+LMK_limset <- function(x, factor = 1.2){
+  r <- range(x)
+  int <- abs(r[1] - r[2])
+  int2 <- int * factor
+  
+  d <- (int2 - int)/2
+  r1 <- r
+  low <- r[1]-d
+  hi <- r[2]+d
+  out <- c(low,hi)
+  return(out)
+}
 
 
 
@@ -137,6 +232,8 @@ if (is.null(fillCol)){
 
 
 }
+
+
 
 
 #'Write DTA/NTS

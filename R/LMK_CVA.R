@@ -9,6 +9,13 @@
 #'
 #'@return Hopefull, will return a list of helpful information and some nice plots
 #'
+#'
+
+
+
+### NOTE: geomorph doesn't correctlly handle working with residuals, this function takes a reference specimen (presumbaly consensus) and a particular analysis (PCA, CVA, PLS) and applies the transformations manually to warp to min/max(default) or specified position.
+
+
 LMK_viz <- function(dat, ...){
   
 
