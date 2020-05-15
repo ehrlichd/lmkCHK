@@ -51,9 +51,20 @@ LMK_sym <- function (A, LMpair){
 
 ##### Plotting
 
+
+
+
+#' Graphical Color Picker
+#' 
+#' Interactive function to choose precise color from a pallete of tints or shades
+#' 
+#' Select any number of colors from palette
+#' 
 #' @param type One of c("shades, "tints") to plot
 #' @param transparency Set color transparency (alpha) from 0 (invisible) to 1 (opaque). Default is opaque
-#' 
+#' @param  n Number of colors to pick
+#'
+#'  
 #' @return Returns a matrix of n colors listed in 3 formats: Rcolor, RGB, and HSV.
 #' 
 #'
@@ -154,7 +165,7 @@ LMK_limset <- function(x, factor = 1.2){
 #'
 #'@param dat data to be plotted in matrix form [X,Y]
 #'@param ci Confidence interval to be plotted. Must be one of c(67.5, 90, 95,99)
-#'@param lineCol Color for the line. Currently takes hsv() format 
+#'@param linesCol Color for the line. Currently takes hsv() format 
 #'@param fillCol color for the fill. Currently only takes hsv() format, set NULL for no fill
 #'@param smoothness Smoothness for ellipses. Defualt should be sufficient but is customizable.
 #'
@@ -162,7 +173,7 @@ LMK_limset <- function(x, factor = 1.2){
 #'@export
 
 
-LMK_ellipse <- function(dat, ci=c(67.5,90,95,99), lineCol, fillCol, smoothness = 20){
+LMK_ellipse <- function(dat, ci=c(67.5,90,95,99), linesCol, fillCol, smoothness = 20){
 
 ##set smoothness of the circle (manually), the greater the number, the smoother it will be
 sm = 20

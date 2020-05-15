@@ -4,8 +4,15 @@
 \alias{LMK_wireframe}
 \title{Compare Wireframes}
 \usage{
-LMK_wireframe(A1, A2, cols = c("red", "blue"), links = NULL,
-  pts = TRUE)
+LMK_wireframe(
+  A1,
+  A2,
+  cols = c("red", "blue"),
+  links = NULL,
+  pts = c("point", "sphere", "none"),
+  rad = c(0.001, 0.001),
+  vectors = FALSE
+)
 }
 \arguments{
 \item{A1}{a reference}
@@ -16,9 +23,13 @@ LMK_wireframe(A1, A2, cols = c("red", "blue"), links = NULL,
 
 \item{links}{a wireframe listing landmarks to be linked}
 
-\item{pts}{Logical, should points be plotted as well as wireframe
+\item{pts}{Should landmarks be plottes as points, spheres, or not at all.}
 
-Plots two wireframe configurations on top of each other. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
+\item{rad}{radius to plot for spheres, defualt is .001. Unclear how project specific}
+
+\item{vectors}{Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky
+
+Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
 }
 \description{
 Function to plot two landmark configurations as wireframes, and compare directly, after MorphoJ
