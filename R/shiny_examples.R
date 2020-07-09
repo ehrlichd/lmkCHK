@@ -119,3 +119,6 @@ fluidPage(
     )
   )
 )
+
+data <- readland.nts("Data.dta")
+

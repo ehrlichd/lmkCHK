@@ -9,43 +9,65 @@
 
 library(shiny)
 
-# Define UI for application that draws a histogram
+# Define UI for application 
 shinyUI(fluidPage(
     
-    titlePanel("Basic widgets"),
+    titlePanel("lmkCHK Data Screening"),
     
     sidebarLayout(
+        
         
     #### Sidebar 
         sidebarPanel(
             
-            ## First row
-            fluidRow(column(3, checkboxGroupInput("checkGroup",h3("Checkbox group"), choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), selected = 1))),
+            tabsetPanel(
+                tabPanel("Data",
+                         
+                         ## Select DTA from file
+                         fluidRow(fileInput("dta", "Select Data",accept = c(".nts", ".NTS", ".ntsys", ".NTSYS", ".dta", ".DTA", ".bsc", ".BSC"))),
+                         
+                         fluidRow(fileInput("lmkpairs","Define paired lmks", accept = c(".csv", ".CSV", ".txt", ".TXT"))),
+                         
+                         fluidRow(fileInput("lmknames", "Specify lmk names",accept = c(".csv", ".CSV", ".txt", ".TXT")))
+                         ),
+                
+                
+                tabPanel("Align",
+                         fluidRow(radioButtons("gpa", "Define Alignment Criteria", choices = c("Align (no scale)", "GPA (no sliding)", "GPA (with"))),
+                         fluidRow(helpText("Define semi landmarks to be treated as contours or surfaces")),
+                         fluidRow(fileInput("curves", "Define Curves")),
+                         fluidRow(fileInput("surf", "Define Surfaces")),
+                         
+                ),
+                
+                
+                tabPanel("Analyze",
+                        # fluidRow(actionButton("goButton", "Run!"))
+                ),
+                
+                tabPanel("Run",
+                         fluidRow(actionButton("goButton", "Run!"))
+                ),
+                
+                
+            )
+            ),
             
-            ## Select dta
-            fluidRow(column(1, fileInput("file.dta", h3("File input")))),
-            ## select lmk names
-            fluidRow(column(2, fileInput("file.lmkname", h3("File input")))),
             
+            ## go buton
             
-            ## GPA Y/N 
-            fluidRow(column(1,radioButtons("gpa", h3("Radio buttons"),choices = list("Choice 1" = 1, "Choice 2" = 2,"Choice 3" = 3),selected = 1))),
-            
-            ## lmks
-            fluidRow(column(2,selectInput("select", h3("Select box"), choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), selected = 1))
-                     ),
-            
-            fluidRow(actionButton("goButton", "Go!"))
-        ),
-        
         #### Main panel
         
         mainPanel(  
             # Output: Plot of the requested variable against mpg
-            plotOutput("plot1")
+            h2(textOutput("deets")),
+            plotOutput("plot1"),
+            plotOutput("plot2")
+        )
             
-            )
-    )
     
-    ))
+    )
+    )
+    )
+
 
