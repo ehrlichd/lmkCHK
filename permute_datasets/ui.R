@@ -33,7 +33,7 @@ shinyUI(fluidPage(
                 
                 
                 tabPanel("Align",
-                         fluidRow(radioButtons("gpa", "Define Alignment Criteria", choices = c("Align (no scale)", "GPA (no sliding)", "GPA (with"))),
+                         fluidRow(radioButtons("gpa", "Define Alignment Criteria", choices = c("Align (no scale)" = "nogpa", "GPA (no sliding)" = "gpa", "GPA (with sliding)" = "sgpa"))),
                          fluidRow(helpText("Define semi landmarks to be treated as contours or surfaces")),
                          fluidRow(fileInput("curves", "Define Curves")),
                          fluidRow(fileInput("surf", "Define Surfaces")),
@@ -42,19 +42,18 @@ shinyUI(fluidPage(
                 
                 
                 tabPanel("Analyze",
-                        # fluidRow(actionButton("goButton", "Run!"))
+                        fluidRow(uiOutput("lmkcontrol"))
                 ),
                 
                 tabPanel("Run",
                          fluidRow(actionButton("goButton", "Run!"))
                 ),
                 
+                type = "tabs"
+                
                 
             )
             ),
-            
-            
-            ## go buton
             
         #### Main panel
         

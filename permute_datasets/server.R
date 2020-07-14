@@ -17,29 +17,81 @@ shinyServer(function(input, output) {
     library(lmkCHK)
     
     v <- reactiveValues(dat = NULL)
+    param <- reactiveValues(crv = NULL, 
+                            srf = NULL)
+    lmklist <- reactiveValues(all = NULL)
+    
+    ### Real issue seems to be initializing empty
+    
+    ### PCA should be calcuated OUTSIDE of observe button; possible as a reactive value
+    ### GPA (and loading) need to be controlled by the button. Could this also be saved to a reactive() object???
+    
     observeEvent(input$goButton, {
-        v$dat <- readland.nts(input$file$datapath)
-        v$gpa <- gpagen(v$dat)
-        v$pca <- prcomp(two.d.array(v$gpa$coords))
-    })
+        v$dat <- readland.nts(input$dta$datapath)
+        
+        
+        
+        if (input$gpa=="nogpa"){
+            v$coords <- ProcGPA(v$dat, scale = F, CSinit = F)$rotated ## Morpho nomenclature
+            v$mshape <- mshape(v$coords)
+        } 
+        
+        else {
+            if (!is.null(input$curves)) param$crv <- as.matrix(read.csv(input$curves$datapath))
+            if (!is.null(input$surf)) param$srf <- as.matrix(read.csv(input$surf$datapath))
+            
+            tt <- gpagen(v$dat, curves = param$crv, surfaces = param$srf)
+            
+            v$coords <- tt$coords
+            v$mshape <- tt$consensus
+        }
+        
+        })
+    
 
+
+    ##### PCA #####
     
     output$plot1 <- renderPlot({
-        if (is.null(v$pca)) return()
+        if (is.null(v$dat)) return()
+        v$pca <- prcomp(two.d.array(v$coords[lmklist$all,,]))
         plot(v$pca$x)
     })
     
+    
+    ##### Text #####
     output$deets <- renderText( {
         if (is.null(v$dat)) return()
-        dd <- dim(v$dat)
+        v$dims <- dim(v$dat)
         
-        paste("This dataset contains", dd[1], "landmarks for", dd[3], "individuals in", dd[2], "dimensions")
+        paste("This dataset contains", sum(!is.na(lmklist$all)), "landmarks for", v$dims[3], "individuals in", v$dims[2], "dimensions")
+        
         })
     
+    ##### 3D Plot #####
     output$plot2 <- renderPlot({
         if (is.null(v$dat)) return()
         clear3d()
-        points3d(v$gpa$consensus)
+        lmklist$all <- as.numeric(input$lmkall)
+        points3d(v$mshape)
+        spheres3d(v$mshape[lmklist$all,], col = "red", radius = .2)
+            
+        
+    })
+    
+    output$lmkcontrol <- renderUI({
+        if (is.null(v$dat)) return()
+        
+        if (is.null(input$lmknames)) {
+            lmkchoice <- paste("lmk",1:v$dims[1],sep=".")
+        } else {
+            lmkchoice <- input$lmknames
+        }
+        
+        checkboxGroupInput("lmkall", "Include (red) / Exclude (black) lmks",
+                           #selected = 1:v$dims[[1]],
+                           choiceNames = lmkchoice,
+                           choiceValues = 1:v$dims[[1]])
     })
 }
 )
