@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^Installers$
 ^\.data
+^\.permute_datasets

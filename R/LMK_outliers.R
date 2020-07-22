@@ -113,4 +113,44 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
 }
 
 
-###Outliers identified from this plot in the SOF data set do not seem to be outliers?
+
+
+#' Plot Variance
+#' 
+#' Function to plot variance within landmarks for a dataset
+#' 
+#' @param a an array, presumbably already aligned
+#' 
+#' @export
+#' 
+#' @return Returns a list of mean variance by landmark for the entire dataset. Also produces a plot
+#' 
+
+LMK_plotVar <- function(a, num = TRUE,tabonly=FALSE,...){
+  p <- dim(a)[[1]]
+  k <- dim(a)[[2]]
+  n <- dim(a)[[3]]
+  
+  lmkVar <- matrix(nrow = p, ncol = k)
+  for(i in 1:p){
+    for(j in 1:k){ 
+      lmkVar[i,j] <- var(a[i,j,])
+    }
+  }
+  means <- apply(lmkVar,1,mean)
+  if(tabonly==TRUE){
+    return(means)
+  }else if (num ==TRUE) {
+    plot(means, ylab = "Var", type = "n",...)
+    text(means, labels = 1:190, cex = .6, col = "red",...)
+    abline(h = mean(means), col = "green")
+    abline(h = mean(means)*1.67, col = "dark green")
+  }else {
+    plot(means, ylab = "Var", type = "n",...)
+    text(means, labels = lmknames$lmkName, cex = .4, col = "red",...)
+    abline(h = mean(means), col = "green")
+    abline(h = mean(means)*1.67, col = "dark green")
+  }
+  return(means)
+}
+

@@ -15,8 +15,7 @@ shinyUI(fluidPage(
     titlePanel("lmkCHK Data Screening"),
     
     sidebarLayout(
-        
-        
+
     #### Sidebar 
         sidebarPanel(
             
@@ -40,7 +39,6 @@ shinyUI(fluidPage(
                          
                 ),
                 
-                
                 tabPanel("Analyze",
                         fluidRow(uiOutput("lmkcontrol"))
                 ),
@@ -49,24 +47,38 @@ shinyUI(fluidPage(
                          fluidRow(actionButton("goButton", "Run!"))
                 ),
                 
-                type = "tabs"
-                
-                
-            )
+                type = "tabs")
             ),
             
         #### Main panel
         
-        mainPanel(  
-            # Output: Plot of the requested variable against mpg
-            h2(textOutput("deets")),
-            plotOutput("plot1"),
-            plotOutput("plot2")
-        )
+        mainPanel(
+            fluidPage(
+                titlePanel(textOutput("deets")),
+                tabsetPanel(
+                    tabPanel("Summary",
+                            h2("PLACEHOLDER") ),
+                    tabPanel("PCA",
+                             plotOutput("plot1")),
+                    tabPanel("Var",
+                             plotOutput("variance")),
+                    tabPanel("Outliers",
+                             plotOutput("outliers"))
+                    )
+                ),
             
+            plotOutput("plot2") ## call 3D plot
+            
+            ) ## close mainPanel
+        ) ## close sidebarLayout
     
-    )
-    )
-    )
+    ) ## close whole app fluidPage
+    
+    ) ## Close ui
+
+
+    
+    
+
 
 
