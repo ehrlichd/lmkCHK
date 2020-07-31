@@ -17,6 +17,7 @@
 #'@import grDevices
 #'
 #'
+#'
 NULL
 
 #####Need to find sample LMK data to include; MWU skulls?#####
@@ -643,6 +644,20 @@ LMK_iccA <- function(obs1, obs2){
   return(out)
 }
 
+#' Launch interactive screening plots
+#' 
+#' GUI interface to choose DTA file, and various classifiers to conduct preliminary analysis.
+#' 
+#' @export
+#' 
 
+LMK_Screen <- function() {
+  appDir <- system.file("apps", "LMK_Screen", package = "lmkCHK")
+  if (appDir == "") {
+    stop("Could not find example directory. Try re-installing `lmkCHK`.", call. = FALSE)
+  }
+  
+  shiny::runApp(appDir, display.mode = "normal")
+}
 
 
