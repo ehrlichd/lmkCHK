@@ -137,8 +137,6 @@ LMK_colpick <- function(n=1, type = c("shades", "tints"), transparency = 1){
 #' @param x A vector to be plotted
 #' @param factor to expand the data (default=1.2)
 #'
-#' @value Returns a value of length 2, the scaled range
-#'
 #' @export
 
 

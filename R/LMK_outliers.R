@@ -120,13 +120,15 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
 #' Function to plot variance within landmarks for a dataset
 #' 
 #' @param a an array, presumbably already aligned
-#' 
+#' @param lmknames A vector of landmark names to plot. If null (default) points are labeled by index. 
+#' @param tabonly Logical. If FALSE (default) function returns list of mean variance by landmark and plots values. If TURE, plotting steps are supressed.
+#' @param ... Additional arguments to pass to plotting functions
 #' @export
 #' 
 #' @return Returns a list of mean variance by landmark for the entire dataset. Also produces a plot
 #' 
 
-LMK_plotVar <- function(a, num = TRUE,tabonly=FALSE,...){
+LMK_plotVar <- function(a, lmknames = NULL,tabonly=FALSE,...){
   p <- dim(a)[[1]]
   k <- dim(a)[[2]]
   n <- dim(a)[[3]]
@@ -140,14 +142,14 @@ LMK_plotVar <- function(a, num = TRUE,tabonly=FALSE,...){
   means <- apply(lmkVar,1,mean)
   if(tabonly==TRUE){
     return(means)
-  }else if (num ==TRUE) {
+  }else if (is.null(lmknames)) {
     plot(means, ylab = "Var", type = "n",...)
     text(means, labels = 1:190, cex = .6, col = "red",...)
     abline(h = mean(means), col = "green")
     abline(h = mean(means)*1.67, col = "dark green")
   }else {
     plot(means, ylab = "Var", type = "n",...)
-    text(means, labels = lmknames$lmkName, cex = .4, col = "red",...)
+    text(means, labels = lmknames, cex = .4, col = "red",...)
     abline(h = mean(means), col = "green")
     abline(h = mean(means)*1.67, col = "dark green")
   }
