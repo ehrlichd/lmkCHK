@@ -15,11 +15,14 @@ shinyServer(function(input, output) {
     options(shiny.maxRequestSize=30*1024^2) ## change max file size to 30 MBs
     
     library(lmkCHK)
+    library(rgl)
     
     v <- reactiveValues(dat = NULL)
     param <- reactiveValues(crv = NULL, 
                             srf = NULL)
     lmklist <- reactiveValues(all = NULL)
+    
+    outlist <- reactiveValues(dists = NULL)
     
     ### Real issue seems to be initializing empty
     
@@ -56,7 +59,8 @@ shinyServer(function(input, output) {
         if (is.null(v$dat)) return()
         v$pca <- prcomp(two.d.array(v$coords[lmklist$all,,]))
         plot(v$pca$x)
-    })
+        
+        })
     
     
     ##### Text #####
@@ -69,15 +73,16 @@ shinyServer(function(input, output) {
         })
     
     ##### 3D Plot #####
-    output$plot2 <- renderPlot({
+    output$plot2 <- renderRglwidget({
         if (is.null(v$dat)) return()
+        
         clear3d()
         lmklist$all <- as.numeric(input$lmkall)
         points3d(v$mshape)
         spheres3d(v$mshape[lmklist$all,], col = "red", radius = .2)
-            
-        
-    })
+        rglwidget()
+
+        })
     
     
     #### Variance Plot ####
@@ -85,46 +90,23 @@ shinyServer(function(input, output) {
     output$variance <- renderPlot({
         if(is.null(v$dat)) return()
         
+        LMK_plotVar(v$coords[lmklist$all,,], lmknames = input$lmknames)
         
-        
-        plotVar <- function(a, num = TRUE,tabonly=FALSE,...){
-            p <- dim(a)[[1]]
-            k <- dim(a)[[2]]
-            n <- dim(a)[[3]]
-            
-            lmkVar <- matrix(nrow = p, ncol = k)
-            for(i in 1:p){
-                for(j in 1:k){ 
-                    lmkVar[i,j] <- var(a[i,j,])
-                }
-            }
-            means <- apply(lmkVar,1,mean)
-            if(tabonly==TRUE){
-                return(means)
-            }else if (num ==TRUE) {
-                plot(means, ylab = "Var", type = "n",...)
-                text(means, labels = 1:190, cex = .6, col = "red",...)
-                abline(h = mean(means), col = "green")
-                abline(h = mean(means)*1.67, col = "dark green")
-            }else {
-                plot(means, ylab = "Var", type = "n",...)
-                text(means, labels = lmknames$lmkName, cex = .4, col = "red",...)
-                abline(h = mean(means), col = "green")
-                abline(h = mean(means)*1.67, col = "dark green")
-            }
-            return(means)
-        }
-        
-        plotVar(v$coords[lmklist$all,,])
-    })
+        })
     
-    ##### Error Plot #####
+    ##### Outliers Plot #####
     
     output$outliers <- renderPlot({
         if(is.null(v$dat)) return()
+        "
+        outlist$dists <- LMK_plotoutliers(v$coords[lmklist$all,,], gpa = TRUE, plotALL = FALSE)$ind.info
+        
+        outlist$sort <- outlist$dists[order(outlist$dists[,2], decreasing = T),]
 
-        LMK_plotoutliers(v$coords[lmklist$all,,], gpa = FALSE,plotALL = F)
-    })
+        plot(outlist$sort[,2])
+        "
+        LMK_plotoutliers(v$coords[lmklist$all,,], gpa = T, plotALL = F)
+        })
     
     
     
@@ -141,9 +123,12 @@ shinyServer(function(input, output) {
         }
         
         checkboxGroupInput("lmkall", "Include (red) / Exclude (black) lmks",
-                           #selected = 1:v$dims[[1]],
+                           selected = 1:v$dims[[1]], ## select all by default
                            choiceNames = lmkchoice,
                            choiceValues = 1:v$dims[[1]])
+        
+        })
+    
+    
+    
     })
-}
-)

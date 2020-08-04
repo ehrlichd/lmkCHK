@@ -39,7 +39,7 @@ shinyUI(fluidPage(
                          
                 ),
                 
-                tabPanel("Analyze",
+                tabPanel("Toggle LMKs",
                         fluidRow(uiOutput("lmkcontrol"))
                 ),
                 
@@ -56,8 +56,10 @@ shinyUI(fluidPage(
             fluidPage(
                 titlePanel(textOutput("deets")),
                 tabsetPanel(
-                    tabPanel("Summary",
-                            h2("PLACEHOLDER") ),
+                    tabPanel("active LMK",
+                             #h2("PLACEHOLDER") 
+                             #plotOutput("plot2") ## call 3D plot
+                             rglwidgetOutput("plot2")),
                     tabPanel("PCA",
                              plotOutput("plot1")),
                     tabPanel("Var",
@@ -67,7 +69,7 @@ shinyUI(fluidPage(
                     )
                 ),
             
-            plotOutput("plot2") ## call 3D plot
+
             
             ) ## close mainPanel
         ) ## close sidebarLayout
