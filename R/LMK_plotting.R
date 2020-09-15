@@ -67,6 +67,7 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' @param pts Should landmarks be plottes as points, spheres, or not at all.
 #' @param rad radius to plot for spheres, defualt is .001. Unclear how project specific
 #' @param vectors Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky
+#' @param ... Additional arguments to pass to plotting functions.
 #' 
 #'Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 #' 
@@ -74,7 +75,7 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' 
 #' 
 
-LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL, pts = c("point", "sphere", "none"), rad = c(.001, .001), vectors = FALSE){
+LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL, pts = c("point", "sphere", "none"), rad = c(.001, .001), vectors = FALSE, ...){
   
   r <- range(A1,A2)
   p <- dim(A1)[[1]]
@@ -93,8 +94,8 @@ LMK_wireframe <- function(A1, A2, cols = c("red","blue"), links = NULL, pts = c(
   if(!is.null(links)){
     
     for (i in 1:l){
-      segments3d(A1[links[i,],], col = cols[1])
-      segments3d(A2[links[i,],], col = cols[2])
+      segments3d(A1[links[i,],], col = cols[1],...)
+      segments3d(A2[links[i,],], col = cols[2],...)
 
     }
   }
