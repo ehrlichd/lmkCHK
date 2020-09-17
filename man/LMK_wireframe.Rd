@@ -11,7 +11,8 @@ LMK_wireframe(
   links = NULL,
   pts = c("point", "sphere", "none"),
   rad = c(0.001, 0.001),
-  vectors = FALSE
+  vectors = FALSE,
+  ...
 )
 }
 \arguments{
@@ -27,7 +28,9 @@ LMK_wireframe(
 
 \item{rad}{radius to plot for spheres, defualt is .001. Unclear how project specific}
 
-\item{vectors}{Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky
+\item{vectors}{Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky}
+
+\item{...}{Additional arguments to pass to plotting functions.
 
 Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
 }

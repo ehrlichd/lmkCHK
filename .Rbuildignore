@@ -3,3 +3,4 @@
 ^Installers$
 ^\.data
 ^\.permute_datasets
+^cran-comments\.Rmd$
