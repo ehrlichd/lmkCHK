@@ -11,12 +11,12 @@ Description: A package for visualizing and screening 3D landmark data.
   packages. 
 Depends: R (>= 3.2.0)
 Imports: 
-    shiny, 
     Morpho,
     geomorph,
-    rgl,
-    psych,
-    lme4
+    rgl
+Suggests:
+    shiny,
+    psych
 License: GPL (>= 3.0)
 Encoding: UTF-8
 LazyData: true
