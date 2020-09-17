@@ -7,7 +7,7 @@ output: html_document
 
 ## Test Environments
 
-* linux-gnu  x86_64 ; R v. 3.6.3
+* linux-gnu, Ubuntu, x86_64 ; R v. 3.6.3
 * OS X ; R v 4.0.2
 * 
 ## RMD Check Results
