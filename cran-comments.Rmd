@@ -8,12 +8,12 @@ output: html_document
 ## Test Environments
 
 * linux-gnu  x86_64 ; R v. 3.6.3
-* OS X
+* OS X ; R v 4.0.2
 * 
 ## RMD Check Results
 
 There are no ERRORs or WARNINGs
-
+  
 There was 1 NOTE
 *  ── R CMD check results ─────────────────────────────────────── lmkCHK 0.8.2 ────
   Duration: 56.1s
