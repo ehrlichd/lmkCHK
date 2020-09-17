@@ -12,8 +12,6 @@
 #'@import stats
 #'@import utils
 #'@import graphics
-#'@import psych
-#'@import lme4
 #'@import grDevices
 #'
 #'
