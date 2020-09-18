@@ -119,9 +119,9 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
 #' 
 #' Function to plot variance within landmarks for a dataset
 #' 
-#' @param a an array, presumbably already aligned
+#' @param a an array, presumably already aligned
 #' @param lmknames A vector of landmark names to plot. If null (default) points are labeled by index. 
-#' @param tabonly Logical. If FALSE (default) function returns list of mean variance by landmark and plots values. If TURE, plotting steps are supressed.
+#' @param tabonly Logical. If FALSE (default) function returns list of mean variance by landmark and plots values. If TURE, plotting steps are suppressed.
 #' @param ... Additional arguments to pass to plotting functions
 #' @export
 #' 

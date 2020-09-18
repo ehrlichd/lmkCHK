@@ -8,7 +8,7 @@
 #' 
 #' @param A1 A 3D array of landmark data; A reference 
 #' @param A2 A second 3D array of landmark data to compare to the reference
-#' @param new Should a new graphing window be opened (Default is to overwrite the previous)
+#' @param new Should a new graphing window be opened (default is to overwrite the previous)
 #' @param main A character string to display as the title. If main= NULL (default) function will attempt to deparse object names.
 #' 
 #' 
@@ -64,12 +64,12 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' @param A2 a target
 #' @param links a wireframe listing landmarks to be linked
 #' @param cols a list of two colors to use for plots (default Red, Blue)
-#' @param pts Should landmarks be plottes as points, spheres, or not at all.
+#' @param pts Should landmarks be plotted as points, spheres, or not at all.
 #' @param rad radius to plot for spheres, defualt is .001. Unclear how project specific
 #' @param vectors Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky
 #' @param ... Additional arguments to pass to plotting functions.
 #' 
-#'Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
+#'Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 #' 
 #' @export
 #' 

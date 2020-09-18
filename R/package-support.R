@@ -26,7 +26,7 @@ NULL
 #'
 #'Function to provide easy specification and handling of multistep symmetrization process
 #'
-#'Under full sequence landmarks are first estimated using bilatteral reflection. If missing data are still present, landmarks are estimated using TPS interpolation of n=3 nearest neighbors. Now complete LMK arrays are reflected a final time and averaged creating perfectly symmetrical configurations
+#'Under full sequence landmarks are first estimated using bilateral reflection. If missing data are still present, landmarks are estimated using TPS interpolation of n=3 nearest neighbors. Now complete LMK arrays are reflected a final time and averaged creating perfectly symmetrical configurations
 #'
 #'@param A A landmark configuration in the form p x k x n
 #'@param LMpair A matrix listing paried landmarks, those not listed are assumed to be midline
@@ -317,7 +317,7 @@ LMK_swap <- function(a, l1, l2){
 #####
 #' Get sliders
 #' 
-#' Define a sliders table (geomorph) for a contour with fixed enpoints
+#' Define a sliders table (geomorph) for a contour with fixed endpoints
 #' 
 #' Assumes all points slide sequentially between endpoints
 #'  
@@ -357,7 +357,7 @@ LMK_get_sliders <- function(c1){
 #' @param A2 A second 3D landmark array in the form p x k x n
 #' 
 #'  
-#' @return Returns a list (3L) containing the direct Euclidean distance for all individuals/landmarks, as well as sumarized by individual and landmark
+#' @return Returns a list (3L) containing the direct Euclidean distance for all individuals/landmarks, as well as summarized by individual and landmark
 #' 
 #' @export
 #' 
@@ -447,7 +447,7 @@ LMK_euD <- function(A1, A2){
 #'
 #'Create a color ramp based on a grouping factor
 #'
-#'Creates color ramp for a given factor and returns a vector of collor assignments for each individual using grDevices::rainbow(). Useful for plotting by group.
+#'Creates color ramp for a given factor and returns a vector of color assignments for each individual using grDevices::rainbow(). Useful for plotting by group.
 #'
 #'@param grp A grouping variable, should be a factor
 #'@param mute Logical, should color be muted. If true (default), color values will be generated with saturation value of .4, if false, values will have full saturation (1.0)
@@ -519,7 +519,7 @@ LMK_bscale <- function(A, cs){
 #'
 #'@param d a dataset
 #'@param f a function
-#'@param grp a grouping varaible
+#'@param grp a grouping variable
 LMK_grp_apply <- function(d, f, grp){
   
   out <- as.data.frame(matrix(nrow = (length(levels(grp))+1), ncol = length(d)*2))
