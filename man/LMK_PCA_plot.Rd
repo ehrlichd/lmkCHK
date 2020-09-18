@@ -13,7 +13,7 @@ LMK_PCA_plot(A, xPC = 1, yPC = 2, zPC = NULL, grp)
 
 \item{yPC}{an integer indicating which PC to plot, default = 2}
 
-\item{zPC}{an integer indiciating which PC to plot, default = NULL (2D)}
+\item{zPC}{an integer indicating which PC to plot, default = NULL (2D)}
 
 \item{grp}{a grouping factor}
 }

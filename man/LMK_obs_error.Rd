@@ -11,18 +11,18 @@ LMK_obs_error(obs1, obs2, lmk.lbl = NULL, full = FALSE)
 
 \item{obs2}{A second set of observations of landmark data}
 
-\item{lmk.lbl}{A charactor vector containing informative names for landmarks. If Null (default) LMKs will be labeld as 'lmk.1, lmk.2, lmk.3, ...'}
+\item{lmk.lbl}{A character vector containing informative names for landmarks. If Null (default) LMKs will be labeled as 'lmk.1, lmk.2, lmk.3, ...'}
 
 \item{full}{Logical, should a full output be returned. By default (FALSE), only a summary table is returned. If TRUE, a list (3L) is returned with additional infomation.}
 }
 \value{
-Test returns a table summarizing euclidean distance, ICC and chronbach's alpha. If full = TRUE, then the function returns a list (3L) of additional raw/transformed values used in calculations
+Test returns a table summarizing euclidean distance, ICC and Chronbach's alpha. If full = TRUE, then the function returns a list (3L) of additional raw/transformed values used in calculations
 }
 \description{
 Calculate the inter- or intra-observer error between two sets of LMK data
 }
 \details{
-Computes three measures of error between two sets of LMK data. Direct Euclidean distance, intraclass correlation (ICC), and Chronbachs alpha. All values are summarized by landmark, and by individual to investigate/identify systemic error. Output is a summary table, or a list (3L) containing the summary table, as well as additional raw and transformed values.
+Computes three measures of error between two sets of LMK data. Direct Euclidean distance, intraclass correlation (ICC), and Chronbach's alpha. All values are summarized by landmark, and by individual to investigate/identify systemic error. Output is a summary table, or a list (3L) containing the summary table, as well as additional raw and transformed values.
 }
 \author{
 Daniel Ehrlich

@@ -18,5 +18,5 @@ Returns a symmetrized landmark configuration with no missing data
 Function to provide easy specification and handling of multistep symmetrization process
 }
 \details{
-Under full sequence landmarks are first estimated using bilatteral reflection. If missing data are still present, landmarks are estimated using TPS interpolation of n=3 nearest neighbors. Now complete LMK arrays are reflected a final time and averaged creating perfectly symmetrical configurations
+Under full sequence landmarks are first estimated using bilateral reflection. If missing data are still present, landmarks are estimated using TPS interpolation of n=3 nearest neighbors. Now complete LMK arrays are reflected a final time and averaged creating perfectly symmetrical configurations
 }

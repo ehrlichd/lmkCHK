@@ -18,7 +18,7 @@ Returns a vector of color assignments for each individual based on a grouping fa
 Create a color ramp based on a grouping factor
 }
 \details{
-Creates color ramp for a given factor and returns a vector of collor assignments for each individual using grDevices::rainbow(). Useful for plotting by group.
+Creates color ramp for a given factor and returns a vector of color assignments for each individual using grDevices::rainbow(). Useful for plotting by group.
 }
 \author{
 Daniel Ehrlich

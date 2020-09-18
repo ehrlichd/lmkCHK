@@ -18,5 +18,5 @@ Hopefull, will return a list of helpful information and some nice plots
 Easily visualize shape change and create relative warps for LMK data
 }
 \details{
-Attempt to comvine all of these into a single function
+Attempt to combine all of these into a single function
 }

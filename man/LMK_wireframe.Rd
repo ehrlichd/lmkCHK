@@ -24,7 +24,7 @@ LMK_wireframe(
 
 \item{links}{a wireframe listing landmarks to be linked}
 
-\item{pts}{Should landmarks be plottes as points, spheres, or not at all.}
+\item{pts}{Should landmarks be plotted as points, spheres, or not at all.}
 
 \item{rad}{radius to plot for spheres, defualt is .001. Unclear how project specific}
 
@@ -32,7 +32,7 @@ LMK_wireframe(
 
 \item{...}{Additional arguments to pass to plotting functions.
 
-Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumabably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
+Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
 }
 \description{
 Function to plot two landmark configurations as wireframes, and compare directly, after MorphoJ

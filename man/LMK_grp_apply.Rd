@@ -11,7 +11,7 @@ LMK_grp_apply(d, f, grp)
 
 \item{f}{a function}
 
-\item{grp}{a grouping varaible}
+\item{grp}{a grouping variable}
 }
 \description{
 Apply a function (f) to a set of data (d) by a grouping variable (grp).

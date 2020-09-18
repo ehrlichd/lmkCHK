@@ -7,11 +7,11 @@
 LMK_plotVar(a, lmknames = NULL, tabonly = FALSE, ...)
 }
 \arguments{
-\item{a}{an array, presumbably already aligned}
+\item{a}{an array, presumably already aligned}
 
 \item{lmknames}{A vector of landmark names to plot. If null (default) points are labeled by index.}
 
-\item{tabonly}{Logical. If FALSE (default) function returns list of mean variance by landmark and plots values. If TURE, plotting steps are supressed.}
+\item{tabonly}{Logical. If FALSE (default) function returns list of mean variance by landmark and plots values. If TURE, plotting steps are suppressed.}
 
 \item{...}{Additional arguments to pass to plotting functions}
 }

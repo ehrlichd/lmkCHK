@@ -12,7 +12,7 @@ LMK_euD(A1, A2)
 \item{A2}{A second 3D landmark array in the form p x k x n}
 }
 \value{
-Returns a list (3L) containing the direct Euclidean distance for all individuals/landmarks, as well as sumarized by individual and landmark
+Returns a list (3L) containing the direct Euclidean distance for all individuals/landmarks, as well as summarized by individual and landmark
 }
 \description{
 Calculate Euclidean distance between two sets of 3D landmark data. Data should be in the typical p x k x n array.

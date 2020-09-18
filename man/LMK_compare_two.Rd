@@ -11,7 +11,7 @@ LMK_compare_two(A1, A2, new = FALSE, main = NULL)
 
 \item{A2}{A second 3D array of landmark data to compare to the reference}
 
-\item{new}{Should a new graphing window be opened (Default is to overwrite the previous)}
+\item{new}{Should a new graphing window be opened (default is to overwrite the previous)}
 
 \item{main}{A character string to display as the title. If main= NULL (default) function will attempt to deparse object names.}
 }

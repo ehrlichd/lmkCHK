@@ -13,7 +13,7 @@ LMK_get_sliders(c1)
 Returns a table of sliders suitable for use with geomorph::gpagen(). This function assumes all points slide sequentially between the max/min landmarks in the sequence.
 }
 \description{
-Define a sliders table (geomorph) for a contour with fixed enpoints
+Define a sliders table (geomorph) for a contour with fixed endpoints
 }
 \details{
 Assumes all points slide sequentially between endpoints

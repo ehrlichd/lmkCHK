@@ -17,5 +17,5 @@ LMK_CVA_2D(CVA, variate = 1, scale = 5)
 Plots the mean landmark configuration of a CVA an vectors representing the shape change along a given variate, by a given scale
 }
 \description{
-Visualize Shape change in two dimenions of Morpho object.class 'CVA'
+Visualize Shape change in two dimensions of Morpho object.class 'CVA'
 }
