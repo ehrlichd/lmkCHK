@@ -9,7 +9,8 @@ output: html_document
 
 * linux-gnu, Ubuntu, x86_64 ; R v. 3.6.3
 * OS X ; R v 4.0.2
-* 
+* mingw32, Windows 10; R v. 4.0.2
+
 ## RMD Check Results
 
 There are no ERRORs or WARNINGs
