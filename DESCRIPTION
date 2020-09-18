@@ -1,5 +1,5 @@
 Package: lmkCHK
-Title: A package for visualizing and screening 3D landmark data
+Title: A Package for Visualizing and Screening 3D Landmark Data
 Version: 1.0.0
 Authors@R: 
     person(given = "Daniel",
