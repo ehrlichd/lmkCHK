@@ -69,6 +69,7 @@ LMK_sym <- function (A, LMpair){
 #'
 #' @export
 #'
+#'
 
 LMK_colpick <- function(n=1, type = c("shades", "tints"), transparency = 1){
   
@@ -136,6 +137,11 @@ LMK_colpick <- function(n=1, type = c("shades", "tints"), transparency = 1){
 #' @param factor to expand the data (default=1.2)
 #'
 #' @export
+#' 
+#' @example 
+#' 
+#' vec <- 1:10
+#' extend_vec <- LMK_limset(vec)
 
 
 
