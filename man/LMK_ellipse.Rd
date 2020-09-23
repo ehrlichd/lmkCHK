@@ -4,7 +4,13 @@
 \alias{LMK_ellipse}
 \title{Confidence Ellipses}
 \usage{
-LMK_ellipse(dat, ci = c(67.5, 90, 95, 99), linesCol, fillCol, smoothness = 20)
+LMK_ellipse(
+  dat,
+  ci = c(67.5, 90, 95, 99),
+  linesCol = "black",
+  fillCol = "grey",
+  smoothness = 20
+)
 }
 \arguments{
 \item{dat}{data to be plotted in matrix form [X,Y]}
@@ -19,4 +25,12 @@ LMK_ellipse(dat, ci = c(67.5, 90, 95, 99), linesCol, fillCol, smoothness = 20)
 }
 \description{
 Draw confidence ellipses around data
+}
+\examples{
+set.seed(1)
+
+dat <- cbind(rnorm(100,0,1),rnorm(100,0,10))
+plot(dat)
+LMK_ellipse(dat)
+
 }

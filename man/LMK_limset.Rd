@@ -17,3 +17,10 @@ Function to easily set plot buffer
 \details{
 Takes a vector of data, calculates the range of data and scales it by a factor. Returns new range of length=2
 }
+\examples{
+
+vec <- 1:10
+extend_vec <- LMK_limset(vec)
+extend_vec
+
+}

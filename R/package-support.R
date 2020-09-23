@@ -136,12 +136,14 @@ LMK_colpick <- function(n=1, type = c("shades", "tints"), transparency = 1){
 #' @param x A vector to be plotted
 #' @param factor to expand the data (default=1.2)
 #'
-#' @export
 #' 
-#' @example 
+#' @examples 
 #' 
 #' vec <- 1:10
 #' extend_vec <- LMK_limset(vec)
+#' extend_vec
+#' 
+#' @export
 
 
 
@@ -172,11 +174,17 @@ LMK_limset <- function(x, factor = 1.2){
 #'@param fillCol color for the fill. Currently only takes hsv() format, set NULL for no fill
 #'@param smoothness Smoothness for ellipses. Defualt should be sufficient but is customizable.
 #'
-#'
+#' @examples 
+#' set.seed(1)
+#' 
+#' dat <- cbind(rnorm(100,0,1),rnorm(100,0,10))
+#' plot(dat)
+#' LMK_ellipse(dat)
+#' 
 #'@export
 
 
-LMK_ellipse <- function(dat, ci=c(67.5,90,95,99), linesCol, fillCol, smoothness = 20){
+LMK_ellipse <- function(dat, ci=c(67.5,90,95,99), linesCol = "black", fillCol = "grey", smoothness = 20){
 
 ##set smoothness of the circle (manually), the greater the number, the smoother it will be
 sm = 20
