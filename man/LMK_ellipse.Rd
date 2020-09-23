@@ -29,8 +29,12 @@ Draw confidence ellipses around data
 \examples{
 set.seed(1)
 
-dat <- cbind(rnorm(100,0,1),rnorm(100,0,10))
+datx <- rnorm(100,0,1)
+daty <- rnorm(100,0,10)
+
+dat <- cbind(datx, daty)
+
 plot(dat)
-LMK_ellipse(dat)
+LMK_ellipse(dat, ci = 90)
 
 }

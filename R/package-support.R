@@ -191,7 +191,7 @@ LMK_limset <- function(x, factor = 1.2){
 LMK_ellipse <- function(dat, ci=c(67.5,90,95,99), linesCol = "black", fillCol = "grey", smoothness = 20){
 
 ##set smoothness of the circle (manually), the greater the number, the smoother it will be
-sm = 20
+sm <- smoothness
 ##90% inside curve = 4.605
 ##95% inside curve = 5.991
 ##99% inside curve = 9.210
@@ -569,7 +569,7 @@ LMK_grp_apply <- function(d, f, grp){
   return(out)
 }
 
-#' Intra class correlations and Cronbach's Alpha
+#' Intra class correlations and Chronbach's Alpha
 #' 
 #' Compute ICC and CA for each dimension (X,Y,Z) of arrays
 #' 
@@ -587,7 +587,7 @@ LMK_iccA <- function(obs1, obs2){
   
   #inter- or intra- oberserer error
   #where obs1 and obs2 are two identical landmark data sets
-  #function to perform inter class correlation and reports F- and p- values, chronbach's alpha, as well as euclidean distance for a set of landmarks
+  #function to perform inter class correlation and reports F- and p- values, Chronbach's alpha, as well as euclidean distance for a set of landmarks
   #currently assumes: .dta format, 3 dimensions, 34 lmks, object symmetry
   #just get it from psych package
   
