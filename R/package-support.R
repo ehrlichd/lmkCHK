@@ -13,6 +13,7 @@
 #'@import utils
 #'@import graphics
 #'@import grDevices
+#'@import shiny
 #'
 #'
 #'

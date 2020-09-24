@@ -1,21 +1,21 @@
 Package: lmkCHK
-Title: A Package for Visualizing and Screening 3D Landmark Data
+Title: Tools to Visualize and Screen 2D/3D Landmark Data
 Version: 1.0.0
 Authors@R: 
     person(given = "Daniel",
            family = "Ehrlich",
            role = c("aut", "cre"),
            email = "dan.ehrlich.e@gmail.com")
-Description: This package aides in visualizing and screening 3D landmark data. 
+Description: Provides visual and interactive tools to screen 2D/3D landmark data. 
   Meant to supplement other geometric morphometric packages by making vibrant visuals
-  easy. 
+  easy/automatic. 
 Depends: R (>= 3.2.0)
 Imports: 
     Morpho,
     geomorph,
-    rgl
+    rgl,
+    shiny
 Suggests:
-    shiny,
     psych
 License: GPL (>= 3.0)
 Encoding: UTF-8

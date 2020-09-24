@@ -3,5 +3,5 @@
 ^Installers$
 ^\.data
 ^\.permute_datasets
-^cran-comments\.Rmd$
+^cran-comments\.md$
 ^CRAN-RELEASE$

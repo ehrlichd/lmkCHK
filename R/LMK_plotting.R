@@ -41,24 +41,26 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
         lines3d(rbind(A1[j,], A2[j,,i]))
       } 
     }
-    }
-  else {
-    plot3d(A1, col = "red", axes = F, xlim = r, ylim = r, zlim = r, size = 4, xlab = "X", ylab = "Y", zlab = "Z")
-    points3d(A2, col = "grey", size = 5)
-    text3d(colMeans(A1), pos = 3, texts = paste(deparse(substitute(A2)), "compared to"))
-    text3d(colMeans(A1), pos = 1, texts = deparse(substitute(A1)), col = "red")
-    for (j in 1:p){lines3d(rbind(A1[j,], A2[j,]))
-    }
-    }
     
+    } else {
+      plot3d(A1, col = "red", axes = F, xlim = r, ylim = r, zlim = r, size = 4, xlab = "X", ylab = "Y", zlab = "Z")
+      points3d(A2, col = "grey", size = 5)
+      text3d(colMeans(A1), pos = 3, texts = paste(deparse(substitute(A2)), "compared to"))
+      text3d(colMeans(A1), pos = 1, texts = deparse(substitute(A1)), col = "red")
+      for (j in 1:p){
+        lines3d(rbind(A1[j,], A2[j,]))
+      }
+    }
   }
 
 
 
 #' Compare Wireframes
 #'
-#'Function to plot two landmark configurations as wireframes, and compare directly, after MorphoJ
+#'Function to plot two landmark configurations as wireframes, and compare directly
 #' 
+#' 
+#'Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 #' 
 #' @param A1 a reference
 #' @param A2 a target
@@ -69,7 +71,6 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' @param vectors Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky
 #' @param ... Additional arguments to pass to plotting functions.
 #' 
-#'Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 #' 
 #' @export
 #' 

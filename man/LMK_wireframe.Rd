@@ -30,10 +30,11 @@ LMK_wireframe(
 
 \item{vectors}{Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky}
 
-\item{...}{Additional arguments to pass to plotting functions.
-
-Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work}
+\item{...}{Additional arguments to pass to plotting functions.}
 }
 \description{
-Function to plot two landmark configurations as wireframes, and compare directly, after MorphoJ
+Function to plot two landmark configurations as wireframes, and compare directly
+}
+\details{
+Plots two LMK configurations on top of each other as some combination of fixed points and wireframe. Presumably this will be PC min/max, two group means, or mshape and a target individual, but any two matching configurations should work
 }

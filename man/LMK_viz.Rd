@@ -9,7 +9,7 @@ LMK_viz(dat, ...)
 \arguments{
 \item{dat}{Some form of landmark data of class array (p x k x n); gpagen (geomorph); PCA/CVA (morpho)}
 
-\item{...}{Addititional arguments to pass to subsequent functions based on input data}
+\item{...}{Additional arguments to pass to subsequent functions based on input data}
 }
 \value{
 Hopefull, will return a list of helpful information and some nice plots

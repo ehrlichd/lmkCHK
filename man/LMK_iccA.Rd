@@ -2,7 +2,7 @@
 % Please edit documentation in R/package-support.R
 \name{LMK_iccA}
 \alias{LMK_iccA}
-\title{Intra class correlations and Cronbach's Alpha}
+\title{Intra class correlations and Chronbach's Alpha}
 \usage{
 LMK_iccA(obs1, obs2)
 }
