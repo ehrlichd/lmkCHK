@@ -19,8 +19,6 @@
 #'
 NULL
 
-#####Need to find sample LMK data to include; MWU skulls?#####
-
 
 
 #'Symmetrize
