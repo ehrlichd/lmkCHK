@@ -1,9 +1,13 @@
 Package: lmkCHK
 Title: Tools to Visualize and Screen 2D/3D Landmark Data
 Version: 1.0.0
-Authors@R: 
-    person("Daniel", "Ehrlich", role = c("aut", "cre"), email = "dan.ehrlich.e@gmail.com"),
-    person("Michelle", "Singleton", role = "aut")
+Authors@R: c(person(given = "Daniel", 
+                    family = "Ehrlich", 
+                    role = c("aut", "cre"), 
+                    email = "dan.ehrlich.e@gmail.com"),
+            person(given = "Michelle", 
+                  family = "Singleton", 
+                  role = "aut"))
 Description: Provides visual and interactive tools to screen 2D/3D landmark data. 
   Meant to supplement other geometric morphometric packages by making vibrant visuals
   easy/automatic. 
@@ -15,7 +19,6 @@ Suggests:
     psych
 License: GPL (>= 3.0)
 URL: <https://github.com/ehrlichd/lmkCHK>
-Maintainer: Daniel Ehrlich <dan.ehrlich.e@gmail.com>
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

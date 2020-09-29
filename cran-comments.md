@@ -6,7 +6,7 @@ date: "9/17/2020"
 
 ## Release Summary
 
-This is the first CRAN release of lmkCHK
+This is the first CRAN release of lmkCHK ; Updated functions to include more examples as well as a URL. Forthcoming publication will be added once published.
 
 ## Test Environments
 

@@ -21,7 +21,7 @@ LMK_ellipse(
 
 \item{fillCol}{color for the fill. Currently only takes hsv() format, set NULL for no fill}
 
-\item{smoothness}{Smoothness for ellipses. Defualt should be sufficient but is customizable.}
+\item{smoothness}{Smoothness for ellipses. Default should be sufficient but is customizable.}
 }
 \description{
 Draw confidence ellipses around data

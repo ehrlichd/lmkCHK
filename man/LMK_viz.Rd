@@ -12,7 +12,7 @@ LMK_viz(dat, ...)
 \item{...}{Additional arguments to pass to subsequent functions based on input data}
 }
 \value{
-Hopefull, will return a list of helpful information and some nice plots
+will return a list of helpful information and some nice plots
 }
 \description{
 Easily visualize shape change and create relative warps for LMK data

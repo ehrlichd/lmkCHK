@@ -67,7 +67,7 @@ LMK_compare_two <- function(A1, A2, new = FALSE, main = NULL){
 #' @param links a wireframe listing landmarks to be linked
 #' @param cols a list of two colors to use for plots (default Red, Blue)
 #' @param pts Should landmarks be plotted as points, spheres, or not at all.
-#' @param rad radius to plot for spheres, defualt is .001. Unclear how project specific
+#' @param rad radius to plot for spheres, default is .001. Unclear how project specific
 #' @param vectors Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky
 #' @param ... Additional arguments to pass to plotting functions.
 #' 

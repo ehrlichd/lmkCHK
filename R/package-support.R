@@ -171,7 +171,7 @@ LMK_limset <- function(x, factor = 1.2){
 #'@param ci Confidence interval to be plotted. Must be one of c(67.5, 90, 95,99)
 #'@param linesCol Color for the line. Currently takes hsv() format 
 #'@param fillCol color for the fill. Currently only takes hsv() format, set NULL for no fill
-#'@param smoothness Smoothness for ellipses. Defualt should be sufficient but is customizable.
+#'@param smoothness Smoothness for ellipses. Default should be sufficient but is customizable.
 #'
 #' @examples 
 #' set.seed(1)

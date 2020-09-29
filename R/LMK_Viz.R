@@ -7,7 +7,7 @@
 #'
 #'@param ... Additional arguments to pass to subsequent functions based on input data
 #'
-#'@return Hopefull, will return a list of helpful information and some nice plots
+#'@return will return a list of helpful information and some nice plots
 #'
 #'
 

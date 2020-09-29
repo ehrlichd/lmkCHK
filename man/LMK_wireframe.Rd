@@ -26,7 +26,7 @@ LMK_wireframe(
 
 \item{pts}{Should landmarks be plotted as points, spheres, or not at all.}
 
-\item{rad}{radius to plot for spheres, defualt is .001. Unclear how project specific}
+\item{rad}{radius to plot for spheres, default is .001. Unclear how project specific}
 
 \item{vectors}{Should vectors be drawn linking homologous landmarks. This may help show the direction of change, or could look clunky}
 
