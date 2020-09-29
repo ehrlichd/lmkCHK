@@ -16,8 +16,18 @@ LMK_plotVar(a, lmknames = NULL, tabonly = FALSE, ...)
 \item{...}{Additional arguments to pass to plotting functions}
 }
 \value{
-Returns a list of mean variance by landmark for the entire dataset. Also produces a plot
+Returns a list of mean variance by landmark for the entire dataset. Also produces a plot with mean variance (green) and 1 SD (dark green)
 }
 \description{
 Function to plot variance within landmarks for a dataset
+}
+\examples{
+
+require(geomorph)
+data(plethodon)
+gpa <- gpagen(plethodon$land)
+LMK_plotVar(gpa$coords) ## most landmarks show low variance
+## lmks 11,12 plot above 1 standard deviation 
+
+
 }

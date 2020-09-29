@@ -49,35 +49,24 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   
   ###1: procrustes superimposition WITHOUT scaling
   araw <- geomorph::arrayspecs(raw, l, k)
-  #requires shapes package
   
-  
-  #### 11/2019: bscale not scaling correctly
-  #gpa <- geomorph::gpagen(araw,ProcD = F)
-  #aln <- LMK_bscale(gpa$coords, gpa$Csize)
-  
-  aln <- Morpho::ProcGPA(araw, scale = F , reflection = F, CSinit = F)$rotated
+  gpa <- geomorph::gpagen(araw,ProcD = F)
+  aln <- LMK_bscale(gpa$coords, gpa$Csize)
   
   dimnames(aln) <- lbl
   
   ###2:Euclidean Distances
+  
   ar1 <- aln[,,1:n]
   ar2 <- aln[,,(1:n)+n]
-  
-  
   d.out <- LMK_euD(ar1, ar2)
-  
   
   ###3: Intraclass Correlation
   
-  
-  
   icc.out <- LMK_iccA(ar1, ar2)
   
-  
   ###5. Formatting
-  
-  ###This part in particular needs to be reformatted with EXPLICIT calls to variables/colnames
+
   pretty <- as.data.frame(cbind(d.out$by.lmk, icc.out[,c(1,3,4,6,7,9:12)]))
   pretty$avg.ICC <- rowMeans(pretty[,c(2,4,6)],na.rm = T)
   pretty$avg.sig <- rowMeans(pretty[,c(3,5,7)],na.rm = T)
@@ -85,8 +74,6 @@ LMK_obs_error <- function(obs1, obs2, lmk.lbl = NULL, full = FALSE){
   if (full == TRUE){
     out <- list("eu.D" = d.out, "icc" = icc.out, "quick" = pretty)
   } else {out <- pretty}
-  
-    
   
   return(out)
 }

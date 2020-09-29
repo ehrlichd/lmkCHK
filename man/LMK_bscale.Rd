@@ -17,3 +17,17 @@ Returns a scaled 3D landmark array
 \description{
 Scale each individual of a landmark array by an arbitrary value (e.g. centroid size)
 }
+\examples{
+
+require(geomorph)
+data(plethodon)
+
+plotAllSpecimens(plethodon$land) ## plot all unaligned specimens
+gpa <- gpagen(plethodon$land) ## align AND SCALE data
+plotAllSpecimens(gpa$coords)
+
+backscaled <- LMK_bscale(gpa$coords, gpa$Csize)
+
+plotAllSpecimens(backscaled) ## data are aligned, but in their original size
+
+}

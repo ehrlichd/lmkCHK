@@ -17,3 +17,14 @@ Returns a list (3L) containing the direct Euclidean distance for all individuals
 \description{
 Calculate Euclidean distance between two sets of 3D landmark data. Data should be in the typical p x k x n array.
 }
+\examples{
+
+lmks1 <- cbind(1:10, 1:10, 1:10)
+lmks2 <- lmks1*10
+
+LMK_euD(lmks1,lmks2) ## distance between each landmark (1 through 10)
+
+LMK_euD(lmks1[1,], lmks2[1,]) ## distance between a single landmark
+
+
+}

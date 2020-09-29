@@ -309,28 +309,45 @@ LMK_writeland_nts <- function(A, filepath){
 #' Swap Landmarks
 #' 
 #' 
-#' Function to swap landmark configurations, or set as missing
+#' Function to swap landmark sequences within an individual or across an entire array 
 #' 
 #' @param a a p x k x n matrix of landmark coordinates
 #' @param l1 a numeric vector of landmark index (sequence number) to be changed
 #' @param l2 a numeric vector of landmark index (Sequence number) to change to
 #' 
+#' 
+#' @examples 
+#' 
+#' lmks <- cbind(1:10, 1:10, 1:10)
+#' plot(lmks, col = rainbow(10), pch = 16) ## plot sequence (in 2 dimensions)
+#' lmks2 <- LMK_swap(lmks, l1 = c(2,8), l2 = c(8,2)) ## flip landmarks 2,8
+#' plot(lmks2, col = rainbow(10), pch = 16) ## show flipped landmarks
+#' 
+#' 
+#' @export
 #' @author Daniel Ehrlich
 #' 
 LMK_swap <- function(a, l1, l2){
-  #function to swap landmark configurations either by list or single landmarks
-  #change the order, or set LMKs to NA
-  #code written by DEE
-  #WIP
+  
   t.a <- a
+  
   if (length(l1) != length(l2)){stop("Vectors must be the same length")}
   
-  for (i in 1:length(l1)){
-    
-    t.a[l1[i],,] <- a[l2[i],,]
-    t.a[l2[i],,] <- a[l1[i],,]
-    
-  }
+  if(length(dim(t.a))==3){
+    for (i in 1:length(l1)){
+      
+      t.a[l1[i],,] <- a[l2[i],,]
+      t.a[l2[i],,] <- a[l1[i],,]
+      
+    }
+  } else {
+    for (i in 1:length(l1)){
+      
+      t.a[l1[i],] <- a[l2[i],]
+      t.a[l2[i],] <- a[l1[i],]
+    }
+    }
+  return(t.a)
   }
 
 #####
@@ -343,6 +360,15 @@ LMK_swap <- function(a, l1, l2){
 #'@param c1 A vector of landmark numbers
 #' 
 #'@return Returns a table of sliders suitable for use with geomorph::gpagen(). This function assumes all points slide sequentially between the max/min landmarks in the sequence.
+#' 
+#' 
+#' @examples 
+#' 
+#' lmknums <- 1:100
+#' 
+#' sli <- LMK_get_sliders(lmknums[80:100]) ## to treat landmarks 80 through 100 as sliders
+#' 
+#' sli
 #' 
 #' @export
 #' 
@@ -377,6 +403,17 @@ LMK_get_sliders <- function(c1){
 #' 
 #'  
 #' @return Returns a list (3L) containing the direct Euclidean distance for all individuals/landmarks, as well as summarized by individual and landmark
+#' 
+#' 
+#' @examples 
+#' 
+#' lmks1 <- cbind(1:10, 1:10, 1:10)
+#' lmks2 <- lmks1*10
+#' 
+#' LMK_euD(lmks1,lmks2) ## distance between each landmark (1 through 10)
+#' 
+#' LMK_euD(lmks1[1,], lmks2[1,]) ## distance between a single landmark
+#' 
 #' 
 #' @export
 #' 
@@ -472,6 +509,14 @@ LMK_euD <- function(A1, A2){
 #'@param mute Logical, should color be muted. If true (default), color values will be generated with saturation value of .4, if false, values will have full saturation (1.0)
 #'
 #'@return Returns a vector of color assignments for each individual based on a grouping factor. 
+#'
+#'
+#'
+#'@examples
+#'
+#' data <- cbind(1:20, 20:1)
+#' grps <- as.factor(rep(c("A","B","C","D","E"),4)) 
+#' plot(data, col = LMK_colramp(grps), pch = 16) ##convert factor to rainbow pallete
 #'@export
 #'
 #'@author Daniel Ehrlich
@@ -514,12 +559,26 @@ LMK_colramp <- function(grp, mute = TRUE){
 #'
 #'@return Returns a scaled 3D landmark array
 #'
+#'@examples
+#'
+#'require(geomorph)
+#'data(plethodon)
+#'
+#'plotAllSpecimens(plethodon$land) ## plot all unaligned specimens
+#'gpa <- gpagen(plethodon$land) ## align AND SCALE data
+#'plotAllSpecimens(gpa$coords)
+#'
+#'backscaled <- LMK_bscale(gpa$coords, gpa$Csize)
+#'
+#'plotAllSpecimens(backscaled) ## data are aligned, but in their original size
+#'
 #'@export
 
 LMK_bscale <- function(A, cs){
   
   al <- dim(A)[[3]]
   cl <- length(cs)
+  
   if (length(al) != length(cl)){
     stop("data mismatch")
   } else {
@@ -534,11 +593,18 @@ LMK_bscale <- function(A, cs){
 
 #'Group Apply
 #'
-#'Apply a function (f) to a set of data (d) by a grouping variable (grp).
+#'Apply a function (f) to a set of data (d) by a grouping variable (grp). Calculates values within group (eg mean), as well as for the entire ungrouped sample (eg, grand mean). 
 #'
 #'@param d a dataset
 #'@param f a function
 #'@param grp a grouping variable
+#'
+#'@examples
+#'data(iris)
+#'LMK_grp_apply(d = iris[,1:4], f = mean, grp = iris$species) 
+#'
+
+#'@export
 LMK_grp_apply <- function(d, f, grp){
   
   out <- as.data.frame(matrix(nrow = (length(levels(grp))+1), ncol = length(d)*2))
@@ -578,6 +644,8 @@ LMK_grp_apply <- function(d, f, grp){
 #' @param obs2 a 3D landmark array
 #' 
 #' @return Returns a table of ICC coefficients, associated p-values, and Chronbach's Alpha
+#' 
+#' 
 #' 
 #' @export
 #' 

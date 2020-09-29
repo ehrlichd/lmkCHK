@@ -20,6 +20,12 @@ Create a color ramp based on a grouping factor
 \details{
 Creates color ramp for a given factor and returns a vector of color assignments for each individual using grDevices::rainbow(). Useful for plotting by group.
 }
+\examples{
+
+data <- cbind(1:20, 20:1)
+grps <- as.factor(rep(c("A","B","C","D","E"),4)) 
+plot(data, col = LMK_colramp(grps), pch = 16) ##convert factor to rainbow pallete
+}
 \author{
 Daniel Ehrlich
 }

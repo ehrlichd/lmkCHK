@@ -18,6 +18,15 @@ Define a sliders table (geomorph) for a contour with fixed endpoints
 \details{
 Assumes all points slide sequentially between endpoints
 }
+\examples{
+
+lmknums <- 1:100
+
+sli <- LMK_get_sliders(lmknums[80:100]) ## to treat landmarks 80 through 100 as sliders
+
+sli
+
+}
 \author{
 Daniel Ehrlich
 }

@@ -9,7 +9,7 @@ LMK_plotoutliers(A, gpa = TRUE, plotALL = TRUE, ...)
 \arguments{
 \item{A}{Raw 3D coordinate data, procrustes aligned coordinate data, or an object of class == gpagen}
 
-\item{gpa}{Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done. If TRUE, gpa-aligned coordinates and mshape will also be exported}
+\item{gpa}{Logical, should a GPA be calculated. If TRUE, A is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done. If TRUE, gpa-aligned coordinates and mshape will also be exported}
 
 \item{plotALL}{Logical, plot all specimens (and mean) in 3D space}
 
@@ -20,4 +20,13 @@ Returns a list containing summary information of the dataset, individual procrus
 }
 \description{
 Function to identify outliers visually
+}
+\examples{
+
+require(geomorph)
+data(scallops)
+
+outliers <- LMK_plotoutliers(scallops$coorddata, plotALL = FALSE) ## skip 3D plot
+outliers$summary.info
+
 }

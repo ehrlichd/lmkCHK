@@ -14,5 +14,10 @@ LMK_grp_apply(d, f, grp)
 \item{grp}{a grouping variable}
 }
 \description{
-Apply a function (f) to a set of data (d) by a grouping variable (grp).
+Apply a function (f) to a set of data (d) by a grouping variable (grp). Calculates values within group (eg mean), as well as for the entire ungrouped sample (eg, grand mean).
+}
+\examples{
+data(iris)
+LMK_grp_apply(d = iris[,1:4], f = mean, grp = iris$species) 
+
 }

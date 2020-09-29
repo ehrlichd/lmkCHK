@@ -4,10 +4,18 @@
 #'
 #'
 #'@param A Raw 3D coordinate data, procrustes aligned coordinate data, or an object of class == gpagen
-#'@param gpa Logical, should a GPA be calculated. If TRUE, a is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done. If TRUE, gpa-aligned coordinates and mshape will also be exported
+#'@param gpa Logical, should a GPA be calculated. If TRUE, A is assumed to be raw coordinate data and GPA is implemented via geomorph::gpagen. If FALSE, no imposition will be done. If TRUE, gpa-aligned coordinates and mshape will also be exported
 #'@param plotALL Logical, plot all specimens (and mean) in 3D space
 #'
 #'@param ... Additional parameters to pass to gpagen
+#'
+#'@examples
+#'
+#'require(geomorph)
+#'data(scallops)
+#'
+#'outliers <- LMK_plotoutliers(scallops$coorddata, plotALL = FALSE) ## skip 3D plot
+#'outliers$summary.info
 #'
 #'@export
 #' 
@@ -44,22 +52,7 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
   ##Range of data
   r <- range(A)*1.1 
   
-  
-  ####Plot procrustes aligned GrandMean shape and all observations
-  
-  if (plotALL == TRUE){
-    open3d()
-    plot3d(grandM, xlim = r, ylim = r, zlim = r, axes = F, type = "s", col = "red", size = 1)
-    text3d(colMeans(grandM), texts = "Outliers of", adj = c(.5,0))
-    text3d(colMeans(grandM), texts = name, adj = c(.5,1))
-    
-    for (i in 1:n){
-      points3d(A[,,i], col = hsv(0,0,.8, alpha = .8))
-      }
-  
-    }
-  
-  
+
   ####Calculate average procrustes distance ("error") from GrandMean
   
   for(i in 1:n){
@@ -91,8 +84,7 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
     
   if (dist[i,2] > mean(as.numeric(dist[,2])) + 3*sd(as.numeric(dist[,2]))){
     points(i, dist[i,2], pch = 16, col = "red")
-    #text(i, dist[i,2],labels = dist[i,1], col = "red", adj = c(1,1)) ##No idea why this doesn't work
-    
+  
     } else {
       points(i, dist[i,2], pch = 16, col = "grey")
     }
@@ -104,6 +96,29 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
       mean(as.numeric(dist[,2]), na.rm = T), 
       sd(as.numeric(dist[,2]), na.rm = T), 
       range(as.numeric(dist[,2]), na.rm = T)), nrow = 7, ncol = 2)
+  
+  
+  
+  ####Plot procrustes aligned GrandMean shape and all observations
+  
+  if (plotALL == TRUE){
+    open3d()
+    plot3d(grandM, xlim = r, ylim = r, zlim = r, axes = F, type = "s", col = "black", size = 1)
+    text3d(colMeans(grandM), texts = "Outliers of", adj = c(.5,0))
+    text3d(colMeans(grandM), texts = name, adj = c(.5,1))
+    
+    
+    for (i in 1:n){
+      if (dist[i,2] > mean(as.numeric(dist[,2])) + 3*sd(as.numeric(dist[,2]))){
+        points3d(A[,,i], col = "red")
+        
+      } else {
+        points3d(A[,,i], col = hsv(0,0,.8, alpha = .8))
+      }
+    }
+    
+  }
+  
   
   
   if(gpa == TRUE){out <- list("summary.info" = sum, "ind.info" = dist, "GPA" = gA)}
@@ -123,9 +138,23 @@ LMK_plotoutliers <- function(A, gpa = TRUE, plotALL = TRUE, ...){
 #' @param lmknames A vector of landmark names to plot. If null (default) points are labeled by index. 
 #' @param tabonly Logical. If FALSE (default) function returns list of mean variance by landmark and plots values. If TURE, plotting steps are suppressed.
 #' @param ... Additional arguments to pass to plotting functions
+#' 
+#' 
+#' @return Returns a list of mean variance by landmark for the entire dataset. Also produces a plot with mean variance (green) and 1 SD (dark green)
+#' 
+#' 
+#' @examples 
+#' 
+#' require(geomorph)
+#' data(plethodon)
+#' gpa <- gpagen(plethodon$land)
+#' LMK_plotVar(gpa$coords) ## most landmarks show low variance
+#' ## lmks 11,12 plot above 1 standard deviation 
+#' 
+#' 
 #' @export
 #' 
-#' @return Returns a list of mean variance by landmark for the entire dataset. Also produces a plot
+#' 
 #' 
 
 LMK_plotVar <- function(a, lmknames = NULL,tabonly=FALSE,...){
@@ -144,7 +173,7 @@ LMK_plotVar <- function(a, lmknames = NULL,tabonly=FALSE,...){
     return(means)
   }else if (is.null(lmknames)) {
     plot(means, ylab = "Var", type = "n",...)
-    text(means, labels = 1:190, cex = .6, col = "red",...)
+    text(means, labels = 1:p, cex = .6, col = "red",...)
     abline(h = mean(means), col = "green")
     abline(h = mean(means)*1.67, col = "dark green")
   }else {
